@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "489509362219",
+    "project_id": "chatme-f8dd8",
+    "storage_bucket": "chatme-f8dd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489509362219:android:b1f57cd6af90f13e04286e",
+        "android_client_info": {
+          "package_name": "com.example.fashion_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489509362219-i36ejo5saukbl3ok64k1pem1pc9pe8md.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fashion_app",
+            "certificate_hash": "a3fcb462f906db7f0b30a0d02b0ce14b73382f94"
+          }
+        },
+        {
+          "client_id": "489509362219-ro1jioppdkfhfb55e0hbf2fc4ojcl3av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo4NxFrg5xWCfBNzeLD0ZVUADKatE4iMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489509362219-eusj4gn6n648g99a55sqahfjvebjdc6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

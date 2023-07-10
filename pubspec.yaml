@@ -1,0 +1,97 @@
+name: fashion_app
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.2
+  
+  flutter_svg: ^2.0.6
+  flutter_bloc: ^8.1.3
+  get_it: ^7.6.0
+  firebase_core: ^2.13.1
+  firebase_auth: ^4.6.2
+  google_sign_in: ^6.1.3
+  flutter_facebook_auth: ^5.0.11
+  flutter_advanced_drawer: ^1.3.5
+  equatable: ^2.0.5
+  dartz: ^0.10.1
+  shared_preferences: ^2.1.2
+  dio: ^5.2.1+1
+  retrofit: ^4.0.1
+  pretty_dio_logger: ^1.3.1
+  cached_network_image: ^3.2.3
+  shimmer: ^3.0.0
+  skeletons: ^0.0.3
+  flutter_slidable: ^3.0.0
+  google_maps_flutter: ^2.3.1
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  lottie: ^2.4.0  
+  permission_handler: ^10.3.0
+  page_transition: ^2.0.9
+  smooth_page_indicator: ^1.1.0
+  infinite_scroll_pagination: ^3.2.0
+  flutter_phoenix: ^1.1.1
+  internet_connection_checker: ^1.0.0+1
+  easy_localization: ^3.0.2
+  fluttertoast: ^8.2.2
+  cloud_firestore: ^4.8.2
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+  retrofit_generator: ^7.0.1
+  build_runner: ^2.4.5
+
+
+flutter:
+
+
+  uses-material-design: true
+
+ 
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/jsons/
+    - assets/translations/
+  #   - images/a_dot_ham.jpeg
+
+
+
+
+ 
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf                       
+        - asset: assets/fonts/Montserrat-Medium.ttf
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Bold.ttf                       
+        - asset: assets/fonts/Cairo-Medium.ttf
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-SemiBold.ttf
+
+        
+        
+          
