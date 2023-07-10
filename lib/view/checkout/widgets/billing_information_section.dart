@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BillingInformationSection extends StatelessWidget {
   const BillingInformationSection({super.key});
@@ -71,7 +72,7 @@ class BillingInformationCard extends StatelessWidget {
           color: AppColor.gray,
         ),
         const Spacer(),
-        TextUtils(text: '\$$price', fontSize: 16, fontWe: FontWe.medium),
+        TextUtils(text: '\$$price', fontSize: 16),
       ],
     );
   }

@@ -11,40 +11,49 @@ class ProductInfromationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const TextUtils(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
+          child: TextUtils(
             text: AppStrings.productsInformation,
             fontSize: 18,
             fontWe: FontWe.medium,
           ),
-          const SizedBox(height: AppSizes.s10),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextUtils(
-                text: AppStrings.productName,
-                color: AppColor.gray,
-                fontSize: 12,
-              ),
-              TextUtils(
-                text: AppStrings.count,
-                color: AppColor.gray,
-                fontSize: 12,
-              ),
-              TextUtils(
-                text: AppStrings.price,
-                color: AppColor.gray,
-                fontSize: 12,
-              ),
-            ],
+        ),
+        const SizedBox(height: AppSizes.s10),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(AppPadding.p20),
+            child: Column(
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextUtils(
+                      text: AppStrings.productName,
+                      color: AppColor.gray,
+                      fontSize: 12,
+                    ),
+                    TextUtils(
+                      text: AppStrings.count,
+                      color: AppColor.gray,
+                      fontSize: 12,
+                    ),
+                    TextUtils(
+                      text: AppStrings.price,
+                      color: AppColor.gray,
+                      fontSize: 12,
+                    ),
+                  ],
+                ),
+                ..._generateProductsInformationList(context),
+              ],
+            ),
           ),
-          ..._generateProductsInformationList(context),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

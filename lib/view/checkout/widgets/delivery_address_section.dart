@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
@@ -6,9 +10,6 @@ import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DeliveryAddressSection extends StatelessWidget {
   const DeliveryAddressSection({super.key});
@@ -34,6 +35,8 @@ class DeliveryAddressSection extends StatelessWidget {
             return SizedBox(
               height: context.setHeight(0.25),
               child: ListView.builder(
+                itemCount:
+                    BlocProvider.of<AddressCubit>(context).addressList.length,
                 itemBuilder: (context, index) {
                   return DeliveryAddressCard(
                     address: BlocProvider.of<AddressCubit>(context)
