@@ -49,6 +49,7 @@ dependencies:
   easy_localization: ^3.0.2
   fluttertoast: ^8.2.2
   cloud_firestore: ^4.8.2
+  flutter_stripe: ^9.2.2
   
 
 dev_dependencies:

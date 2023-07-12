@@ -1,4 +1,6 @@
+import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:fashion_app/controllers/cart/cart_cubit.dart';
+import 'package:fashion_app/domain/entities/account/address.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,15 +10,23 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   CheckoutCubit() : super(CheckoutInitial());
 
   int currnetPaymentTap = 0;
-  bool addressCheck = false;
+  int addressCheck = 0;
 
   onChangePaymentMethod(int index) {
     currnetPaymentTap = index;
     emit(ChangePaymentMethod());
   }
 
-  setAddress(bool? val) {
-    addressCheck = val!;
+  List<AddressEntity> getSavedAddress(BuildContext context) {
+    return BlocProvider.of<AddressCubit>(context).addressList;
+  }
+
+  AddressEntity getSelectedAddress(BuildContext context) {
+    return getSavedAddress(context)[addressCheck];
+  }
+
+  setAddress(int index) {
+    addressCheck = index;
     emit(CheckoutInitial());
   }
 

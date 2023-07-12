@@ -56,7 +56,7 @@ class OrdersBodySection extends StatelessWidget {
                 Divider(
                   color: context.primaryColor,
                 ),
-                Column(
+                const Column(
                   children: [
                     Row(
                       children: [
