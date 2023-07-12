@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fashion_app/core/errors/failure.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
 import 'package:fashion_app/domain/entities/account/user.dart';
+import 'package:fashion_app/domain/entities/payment/payment_entity.dart';
 import 'package:fashion_app/domain/entities/product/product_entity.dart';
 
 import 'package:fashion_app/domain/entities/product/product_detail_entity.dart';
@@ -68,4 +69,13 @@ abstract class FirebaseFavouriteRepository {
   Future<Either<Failure, void>> deleteFavouriteProduct(int productId);
   Future<Either<Failure, void>> clearFavouritesProducts();
   Future<Either<Failure, void>> addFavouriteProduct(int productId);
+}
+
+abstract class PaymentRepository {
+  Future<Either<Failure, PaymentEntity>> createPaymentIntent(
+      {required String amount,
+      required String currency,
+      required String? paymentMethod});
+
+  Future<Either<Failure, PaymentEntity>> retrievePaymentIntent(String id);
 }

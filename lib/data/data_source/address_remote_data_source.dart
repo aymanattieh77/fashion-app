@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:fashion_app/data/remote/firebase_database/firebase_address_service.dart';
 
 import '../../domain/entities/account/address.dart';

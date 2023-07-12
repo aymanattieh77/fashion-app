@@ -51,6 +51,7 @@ dependencies:
   cloud_firestore: ^4.8.2
   flutter_stripe: ^9.2.2
   
+  
 
 dev_dependencies:
   flutter_test:

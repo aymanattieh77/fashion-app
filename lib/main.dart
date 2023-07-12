@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fashion_app/core/utils/constants.dart';
+import 'package:fashion_app/core/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +24,7 @@ void main() async {
   await Firebase.initializeApp();
   Stripe.publishableKey = AppConstants.stripeKey;
   await Stripe.instance.applySettings();
+
   Bloc.observer = MyBlocObserver();
   setupFavouritesService();
   runApp(

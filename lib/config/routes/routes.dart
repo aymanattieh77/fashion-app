@@ -1,4 +1,5 @@
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
+import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/view/checkout/checkout_screen.dart';
 import 'package:fashion_app/view/settings/profile_settings.dart';
 import 'package:flutter/material.dart';
@@ -149,14 +150,14 @@ class AppRouter {
   static _checkout() {
     setupMapService();
     setupCheckoutService();
+    setupPaymentService();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => getIt<AddressCubit>()..getSavedAddress(),
         ),
-        BlocProvider(
-          create: (context) => getIt<CheckoutCubit>(),
-        ),
+        BlocProvider(create: (context) => getIt<CheckoutCubit>()),
+        BlocProvider(create: (context) => getIt<PaymentCubit>()),
       ],
       child: const CheckoutScreen(),
     );

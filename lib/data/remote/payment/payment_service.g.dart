@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_service.dart';
+part of 'payment_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,12 +8,12 @@ part of 'product_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ProductService implements ProductService {
-  _ProductService(
+class _PaymentService implements PaymentService {
+  _PaymentService(
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://asos2.p.rapidapi.com';
+    baseUrl ??= 'https://api.stripe.com/v1';
   }
 
   final Dio _dio;
@@ -21,50 +21,57 @@ class _ProductService implements ProductService {
   String? baseUrl;
 
   @override
-  Future<ProductDetailModel> getProdcutDetail({required int id}) async {
+  Future<PaymentResponse> createPaymentIntent(Map<String, dynamic> body) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization':
+          'Bearer sk_test_51NSlfpHJsv61vsrnHEREa4AnuandBVeAb3p6lE1HobihXJvMckfk5YEbtcYp2tAMVZ6lSMePg029KXy6zJtfGtv800Btnwvkn8',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ProductDetailModel>(Options(
-      method: 'GET',
+        .fetch<Map<String, dynamic>>(_setStreamType<PaymentResponse>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/products/v3/detail',
+              '/payment_intents',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ProductDetailModel.fromJson(_result.data!);
+    final value = PaymentResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ProductResponse> getProdcuts(
-      {required Map<String, dynamic> queriesParameters}) async {
+  Future<PaymentResponse> retrievePaymentIntent(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(queriesParameters);
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization':
+          'Bearer sk_test_51NSlfpHJsv61vsrnHEREa4AnuandBVeAb3p6lE1HobihXJvMckfk5YEbtcYp2tAMVZ6lSMePg029KXy6zJtfGtv800Btnwvkn8',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ProductResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<PaymentResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/products/v2/list',
+              '/payment_intent/:${id}',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ProductResponse.fromJson(_result.data!);
+    final value = PaymentResponse.fromJson(_result.data!);
     return value;
   }
 

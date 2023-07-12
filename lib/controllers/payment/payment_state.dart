@@ -8,3 +8,7 @@ abstract class PaymentState extends Equatable {
 }
 
 class PaymentInitial extends PaymentState {}
+
+class PaymentSuccess extends PaymentState {}
+
+class PaymentFailure extends PaymentState {}

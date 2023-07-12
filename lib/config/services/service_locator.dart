@@ -1,13 +1,18 @@
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
+import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
+import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
+import 'package:fashion_app/data/remote/payment/payment_service.dart';
 import 'package:fashion_app/data/repository/firebase_address_repository_impl.dart';
 import 'package:fashion_app/data/repository/firebase_favourites_repository_impl.dart';
+import 'package:fashion_app/data/repository/payment_repository_impl.dart';
 import 'package:fashion_app/domain/usecases/favourites/add_favourite_product_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/clear_favourites_products_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/delete_favourite_product_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/get_favourites_products_usecase.dart';
+import 'package:fashion_app/domain/usecases/payment/create_payment_intent_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -88,6 +93,9 @@ setupAPIService() {
       () => FirebaseAddressServiceImpl());
   getIt.registerLazySingleton<FirebaseFavouriteService>(
       () => FirebaseFavouriteServiceImpl());
+
+  getIt.registerLazySingleton<PaymentService>(() => PaymentService(dio));
+  //TODO
 }
 
 setupRemoteDataSource() {
@@ -99,6 +107,8 @@ setupRemoteDataSource() {
       () => AddressRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<FavouriteRemoteDataSource>(
       () => FavouriteRemoteDataSourceImpl(getIt()));
+  getIt.registerLazySingleton<PaymentRemoteDateSource>(
+      () => PaymentRemoteDateSourceImpl(getIt()));
 }
 
 setupAppRepositories() {
@@ -118,6 +128,8 @@ setupAppRepositories() {
       () => FirebaseAddressRepositoryImpl(getIt()));
   getIt.registerLazySingleton<FirebaseFavouriteRepository>(
       () => FirebaseFavouritesRepositoryImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<PaymentRepository>(
+      () => PaymentRepositoryImpl(getIt()));
 }
 
 setupLocalDataService() {
@@ -159,6 +171,13 @@ setupUserService() {
 }
 
 setupAddressService() {}
+setupPaymentService() {
+  if (!GetIt.I.isRegistered<CreatePaymentIntentUsecase>()) {
+    getIt.registerLazySingleton<CreatePaymentIntentUsecase>(
+        () => CreatePaymentIntentUsecase(getIt()));
+    getIt.registerLazySingleton<PaymentCubit>(() => PaymentCubit(getIt()));
+  }
+}
 
 setupFavouritesService() {
   if (!GetIt.I.isRegistered<FavouriteCubit>()) {
