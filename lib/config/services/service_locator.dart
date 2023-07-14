@@ -175,7 +175,7 @@ setupPaymentService() {
   if (!GetIt.I.isRegistered<CreatePaymentIntentUsecase>()) {
     getIt.registerLazySingleton<CreatePaymentIntentUsecase>(
         () => CreatePaymentIntentUsecase(getIt()));
-    getIt.registerLazySingleton<PaymentCubit>(() => PaymentCubit(getIt()));
+    getIt.registerFactory<PaymentCubit>(() => PaymentCubit(getIt()));
   }
 }
 

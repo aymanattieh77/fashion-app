@@ -1,11 +1,11 @@
-import 'package:fashion_app/controllers/payment/payment_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SwipeForPaymentButton extends StatelessWidget {
   const SwipeForPaymentButton({
@@ -26,10 +26,7 @@ class SwipeForPaymentButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50))),
         onPressed: () {
-          BlocProvider.of<PaymentCubit>(context)
-              .makePayment(amount: '2000', currency: 'USD');
-
-          //todo replacement
+          BlocProvider.of<PaymentCubit>(context).makePayment(context);
         },
         child: Row(
           children: [
