@@ -1,9 +1,8 @@
-import 'package:fashion_app/controllers/cart/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:fashion_app/config/routes/routes.dart';
+import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/core/utils/assets.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/core/utils/strings.dart';
@@ -43,7 +42,7 @@ class PaymentBodySection extends StatelessWidget {
         ),
         const SizedBox(height: AppSizes.s10),
         const TextUtils(
-          text: AppStrings.congratulation,
+          text: AppStrings.paymantSuccessfully,
           fontSize: 24,
           fontWe: FontWe.medium,
         ),
@@ -61,17 +60,15 @@ class PaymentBodySection extends StatelessWidget {
             children: [
               CustomElevatedButton(
                 label: AppStrings.getYourReceipt,
-                press: () {},
+                press: () {
+                  //TODO get your receipt
+                },
               ),
               const SizedBox(height: AppSizes.s10),
               CustomElevatedButton(
                 label: AppStrings.backToHome,
                 press: () {
-                  BlocProvider.of<CartCubit>(context).clearAllProductsInCart();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    Routes.home,
-                    (route) => false,
-                  );
+                  BlocProvider.of<PaymentCubit>(context).backToHome(context);
                 },
                 backgroundColor: AppColor.orangeLight,
                 textColor: AppColor.orange,

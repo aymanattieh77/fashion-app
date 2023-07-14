@@ -1,17 +1,14 @@
-import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/controllers/main/main_cubit.dart';
-import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/routes/routes.dart';
-
+import 'package:fashion_app/controllers/main/main_cubit.dart';
+import 'package:fashion_app/controllers/user/user_cubit.dart';
+import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
-
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
 
 import '../../../about/about_screen.dart';

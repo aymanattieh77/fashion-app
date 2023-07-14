@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:fashion_app/controllers/cart/cart_cubit.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'checkout_state.dart';
 

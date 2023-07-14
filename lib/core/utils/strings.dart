@@ -124,6 +124,7 @@ abstract class AppStrings {
   static const price = 'price';
   static const productsInformation = 'products_information';
   static const tax = 'tax';
+  static const paymantSuccessfully = 'paymant_successfully';
 
   // payment strings
   static const congratulation = 'congratulation_';
