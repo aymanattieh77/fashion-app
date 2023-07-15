@@ -9,6 +9,10 @@ Widget customButton({required String label, required Function() press}) {
         backgroundColor: AppColor.orange,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
     onPressed: press,
-    child: TextUtils(text: label, color: AppColor.white),
+    child: TextUtils(
+      text: label,
+      color: AppColor.white,
+      fontSize: 14,
+    ),
   );
 }

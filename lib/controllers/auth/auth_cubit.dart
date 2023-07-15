@@ -1,21 +1,27 @@
-import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/config/services/prefs.dart';
-import 'package:fashion_app/config/services/service_locator.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/core/utils/constants.dart';
-import 'package:fashion_app/core/utils/strings.dart';
-import 'package:fashion_app/domain/entities/account/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fashion_app/config/routes/route_context.dart';
+import 'package:fashion_app/config/routes/routes.dart';
+
+import 'package:fashion_app/config/services/prefs.dart';
+import 'package:fashion_app/config/services/service_locator.dart';
+
+import 'package:fashion_app/controllers/user/user_cubit.dart';
+
 import 'package:fashion_app/core/extensions/string_extension.dart';
 import 'package:fashion_app/core/functions/function.dart';
+
+import 'package:fashion_app/core/utils/constants.dart';
+import 'package:fashion_app/core/utils/strings.dart';
+
+import 'package:fashion_app/domain/entities/account/user.dart';
+
 import 'package:fashion_app/domain/usecases/auth/auth_usecase.dart';
 import 'package:fashion_app/domain/usecases/auth/login_usecase.dart';
 import 'package:fashion_app/domain/usecases/auth/sign_up_usecase.dart';
 import 'package:fashion_app/domain/usecases/base_usecase.dart';
-import 'package:fashion_app/config/routes/routes.dart';
 
 part 'auth_state.dart';
 
@@ -31,6 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
   bool isLogin = true;
   final _prefs = getIt<AppPrefs>();
   User? _user;
+
   void changeChecked(bool value) {
     isChecked = value;
     emit(AuthInitial());
@@ -42,35 +49,19 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signUp(BuildContext context) async {
-    if (fromKey.currentState!.validate()) {
+    if (_formVaildate()) {
       if (!isChecked) {
         showSnackMessage(context, message: AppStrings.pleaseFillTheCheckbox);
         return;
       }
-      emit(AuthLoading());
-      if (usernameController.text.isNotEmpty &&
-          emailController.text.isNotEmpty &&
-          passController.text.isNotEmpty &&
-          isChecked) {
-        (await _authUsecases.signUpUsecase.call(SignUpUsecaseInputs(
-                usernameController.text,
-                emailController.text,
-                passController.text)))
-            .fold(
+      _loading();
+      if (_signUpVaildation()) {
+        (await _authUsecases.signUpUsecase.call(_signUpInputs())).fold(
           (failure) {
-            emit(AuthFailure(failure.message));
-            dismissDialog(context);
-            showSnackMessage(context, message: failure.message);
-            return;
+            _failure(context, failure.message);
           },
           (user) {
-            _prefs.saveUserUid(user.uid);
-            _user = user;
-            emit(AuthSuccess());
-
-            // ignore: use_build_context_synchronously
-
-            context.goToNamed(route: Routes.home, replacement: true);
+            _success(context, user);
           },
         );
       }
@@ -78,24 +69,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> login(BuildContext context) async {
-    if (fromKey.currentState!.validate()) {
-      emit(AuthLoading());
-      if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
-        (await _authUsecases.loginUsecase.call(
-                LoginUsecaseInputs(emailController.text, passController.text)))
-            .fold(
+    if (_formVaildate()) {
+      _loading();
+      if (_loginVaildation()) {
+        (await _authUsecases.loginUsecase.call(_loginInputs())).fold(
           (faliure) {
-            emit(AuthFailure(faliure.message));
-            dismissDialog(context);
-            showSnackMessage(context, message: faliure.message);
-            return;
+            _failure(context, faliure.message);
           },
           (user) {
-            _prefs.saveUserUid(user.uid);
-            _user = user;
-            emit(AuthSuccess());
-
-            context.goToNamed(route: Routes.home, replacement: true);
+            _success(context, user);
           },
         );
       }
@@ -104,17 +86,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resetPassword(BuildContext context) async {
     if (emailController.text.isNotEmpty && emailController.text.isValidEmail) {
-      emit(AuthLoading());
+      _loading();
       (await _authUsecases.resetPasswordUsecase.call(emailController.text))
           .fold(
         (failure) {
-          emit(AuthFailure(failure.message));
-          dismissDialog(context);
-          showSnackMessage(context, message: failure.message);
+          _failure(context, failure.message);
         },
         (r) {
           emit(AuthSuccess());
-
           showSnackMessage(context, message: AppStrings.checkYourEmailAddress);
           context.back();
         },
@@ -125,53 +104,35 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signWithFacebook(BuildContext context) async {
-    emit(AuthLoading());
+    _loading();
     (await _authUsecases.withFacebookUsecase.call(const NoParameters())).fold(
       (failure) {
-        emit(AuthFailure(failure.message));
-        dismissDialog(context);
-        showSnackMessage(context, message: failure.message);
-
-        return;
+        _failure(context, failure.message);
       },
       (user) {
-        _prefs.saveUserUid(user.uid);
-        _user = user;
-        emit(AuthSuccess());
-
-        context.goToNamed(route: Routes.home, replacement: true);
+        _success(context, user);
       },
     );
   }
 
   Future<void> signWithGoogle(BuildContext context) async {
-    emit(AuthLoading());
+    _loading();
 
     (await _authUsecases.withGoogleUsecase.call(const NoParameters())).fold(
       (failure) {
-        emit(AuthFailure(failure.message));
-        dismissDialog(context);
-        showSnackMessage(context, message: failure.message);
-        return;
+        _failure(context, failure.message);
       },
       (user) {
-        _prefs.saveUserUid(user.uid);
-        _user = user;
-        emit(AuthSuccess());
-
-        context.goToNamed(route: Routes.home, replacement: true);
+        _success(context, user);
       },
     );
   }
 
   Future<void> signOut(BuildContext context) async {
-    emit(AuthLoading());
-
+    _loading();
     (await _authUsecases.signoutUsecase.call(const NoParameters())).fold(
       (failure) {
-        emit(AuthFailure(failure.message));
-        showSnackMessage(context, message: failure.message);
-        _prefs.deleteUserUid();
+        _failure(context, failure.message);
       },
       (s) {
         emit(AuthSuccess());
@@ -184,8 +145,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> updateEmail(BuildContext context, String newEmail) async {
     (await _authUsecases.updateEmailUsecase.call(newEmail)).fold(
       (failure) {
-        emit(AuthFailure(failure.message));
-        showSnackMessage(context, message: failure.message);
+        _failure(context, failure.message);
       },
       (r) {
         emit(AuthSuccess());
@@ -194,7 +154,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  saveUserProfile(BuildContext context) async {
+  Future<void> saveUserProfile(BuildContext context) async {
     if (_user != null) {
       final userModel = UserModel(
         uid: _prefs.userUid,
@@ -209,6 +169,51 @@ class AuthCubit extends Cubit<AuthState> {
         },
       );
     }
+  }
+
+  SignUpUsecaseInputs _signUpInputs() {
+    return SignUpUsecaseInputs(
+      usernameController.text,
+      emailController.text,
+      passController.text,
+    );
+  }
+
+  LoginUsecaseInputs _loginInputs() {
+    return LoginUsecaseInputs(emailController.text, passController.text);
+  }
+
+  bool _formVaildate() {
+    return fromKey.currentState!.validate();
+  }
+
+  bool _signUpVaildation() {
+    return usernameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passController.text.isNotEmpty &&
+        isChecked;
+  }
+
+  bool _loginVaildation() {
+    return emailController.text.isNotEmpty && passController.text.isNotEmpty;
+  }
+
+  void _loading() {
+    emit(AuthLoading());
+  }
+
+  void _failure(BuildContext context, String message) {
+    emit(AuthFailure(message));
+    dismissDialog(context);
+    showSnackMessage(context, message: message);
+    return;
+  }
+
+  void _success(BuildContext context, User user) {
+    _prefs.saveUserUid(user.uid);
+    _user = user;
+    emit(AuthSuccess());
+    context.goToNamed(route: Routes.home, replacement: true);
   }
 
   void dispose() {

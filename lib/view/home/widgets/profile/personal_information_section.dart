@@ -30,7 +30,7 @@ class PersonalInformationSection extends StatelessWidget {
         const SizedBox(height: AppSizes.s10),
         BlocBuilder<UserCubit, UserState>(
           builder: (context, state) {
-            if (cubit.getUser == null) {
+            if (cubit.user == null) {
               return loadingCircularWidget();
             }
             return Padding(
@@ -45,19 +45,18 @@ class PersonalInformationSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _rowText(
-                          label: AppStrings.name,
-                          value: cubit.getUser!.username),
+                          label: AppStrings.name, value: cubit.user!.username),
                       _rowText(
-                          label: AppStrings.email, value: cubit.getUser!.email),
+                          label: AppStrings.email, value: cubit.user!.email),
                       _rowText(
                           label: AppStrings.location,
-                          value: cubit.getUser!.location!),
+                          value: cubit.user!.location!),
                       _rowText(
                           label: AppStrings.zipcode,
-                          value: cubit.getUser!.zipCode!),
+                          value: cubit.user!.zipCode!),
                       _rowText(
                           label: AppStrings.phoneNumber,
-                          value: cubit.getUser!.phoneNumber!),
+                          value: cubit.user!.phoneNumber!),
                     ],
                   ),
                 ),

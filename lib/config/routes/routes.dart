@@ -1,26 +1,23 @@
-import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
-import 'package:fashion_app/controllers/payment/payment_cubit.dart';
-import 'package:fashion_app/controllers/splash/splash_cubit.dart';
-import 'package:fashion_app/view/checkout/checkout_screen.dart';
-import 'package:fashion_app/view/settings/profile_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/services/service_locator.dart';
-
 import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:fashion_app/controllers/auth/auth_cubit.dart';
+import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/controllers/filter/filter_cubit.dart';
 import 'package:fashion_app/controllers/home/home_cubit.dart';
 import 'package:fashion_app/controllers/main/main_cubit.dart';
 import 'package:fashion_app/controllers/on_boarding/on_boarding_cubit.dart';
+import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/controllers/search/search_cubit.dart';
-
+import 'package:fashion_app/controllers/splash/splash_cubit.dart';
 import 'package:fashion_app/view/Wallets/my_wallets_screen.dart';
 import 'package:fashion_app/view/auth/auth_screen.dart';
 import 'package:fashion_app/view/cart/cart_screen.dart';
+import 'package:fashion_app/view/checkout/checkout_screen.dart';
 import 'package:fashion_app/view/delivery/pages/delivery_address_screen.dart';
 import 'package:fashion_app/view/favourite/favourite_screen.dart';
 import 'package:fashion_app/view/home/home_screen.dart';
@@ -28,6 +25,7 @@ import 'package:fashion_app/view/notifications/notifications_screen.dart';
 import 'package:fashion_app/view/on_boarding/on_boarding_screen.dart';
 import 'package:fashion_app/view/orders/orders_screen.dart';
 import 'package:fashion_app/view/search/search_page.dart';
+import 'package:fashion_app/view/settings/profile_settings.dart';
 import 'package:fashion_app/view/settings/settings_screen.dart';
 import 'package:fashion_app/view/splash/splash_screen.dart';
 
@@ -85,9 +83,8 @@ class AppRouter {
   }
 
   static _splash() {
-    setupSplashService();
     return BlocProvider(
-      create: (context) => getIt<SplashCubit>(),
+      create: (context) => SplashCubit(),
       child: const SplashScreen(),
     );
   }

@@ -127,7 +127,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   UserModel? _getUser(BuildContext context) {
-    return BlocProvider.of<UserCubit>(context).getUser;
+    return BlocProvider.of<UserCubit>(context).user;
   }
 
   goToPaymentSuccessfully(BuildContext context) {

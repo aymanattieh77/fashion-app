@@ -1,19 +1,15 @@
-import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/controllers/auth/auth_cubit.dart';
-
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
-
+import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
-
 import 'package:fashion_app/view/auth/widgets/check_and_accept_section.dart';
 import 'package:fashion_app/view/auth/widgets/custom_input_field.dart';
 import 'package:fashion_app/view/auth/widgets/login_or_signup_text.dart';
 import 'package:fashion_app/view/auth/widgets/or_divider.dart';
-
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
 
 import 'widgets/google_and_facebook_login.dart';

@@ -31,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
           const SizedBox(height: AppSizes.s30),
           BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {
-              if (BlocProvider.of<UserCubit>(context).getUser == null) {
+              if (BlocProvider.of<UserCubit>(context).user == null) {
                 return loadingCircularWidget();
               }
               return Row(
@@ -39,14 +39,14 @@ class CustomDrawer extends StatelessWidget {
                   CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
-                      BlocProvider.of<UserCubit>(context).getUser!.profilePhoto,
+                      BlocProvider.of<UserCubit>(context).user!.profilePhoto,
                     ),
                   ),
                   const SizedBox(width: AppSizes.s15),
                   Expanded(
                     child: TextUtils(
                       text: BlocProvider.of<UserCubit>(context)
-                          .getUser!
+                          .user!
                           .username
                           .toUpperCase(),
                       fontSize: 14,

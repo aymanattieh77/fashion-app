@@ -12,7 +12,7 @@ class ProfileHeaderSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        if (BlocProvider.of<UserCubit>(context).getUser == null) {
+        if (BlocProvider.of<UserCubit>(context).user == null) {
           return loadingCircularWidget();
         }
 
@@ -24,17 +24,17 @@ class ProfileHeaderSection extends StatelessWidget {
               CircleAvatar(
                 radius: 45,
                 backgroundImage: NetworkImage(
-                    BlocProvider.of<UserCubit>(context).getUser!.profilePhoto),
+                    BlocProvider.of<UserCubit>(context).user!.profilePhoto),
               ),
               const SizedBox(height: AppSizes.s10),
               TextUtils(
-                text: BlocProvider.of<UserCubit>(context).getUser!.username,
+                text: BlocProvider.of<UserCubit>(context).user!.username,
                 fontWe: FontWe.medium,
                 tr: false,
               ),
               const SizedBox(height: AppSizes.s10),
               TextUtils(
-                text: BlocProvider.of<UserCubit>(context).getUser!.email,
+                text: BlocProvider.of<UserCubit>(context).user!.email,
                 fontSize: 12,
                 tr: false,
               ),

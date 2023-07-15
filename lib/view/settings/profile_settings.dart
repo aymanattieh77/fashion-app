@@ -1,14 +1,12 @@
-import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
-
 import 'package:fashion_app/view/auth/widgets/custom_input_field.dart';
-
 import 'package:fashion_app/view/widgets/common/custom_appbar.dart';
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({super.key});
@@ -29,7 +27,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   void initState() {
     super.initState();
     cubit = BlocProvider.of<UserCubit>(context)..getUserProfileById();
-    print('object');
+
     if (cubit.user != null) {
       username.text = cubit.user!.username;
       email.text = cubit.user!.email;

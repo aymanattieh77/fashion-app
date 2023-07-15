@@ -1,7 +1,6 @@
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/controllers/payment/payment_cubit.dart';
-import 'package:fashion_app/controllers/splash/splash_cubit.dart';
 import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
 import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
@@ -172,12 +171,6 @@ setupUserService() {
 }
 
 setupAddressService() {}
-
-void setupSplashService() {
-  if (!GetIt.I.isRegistered<SplashCubit>()) {
-    getIt.registerFactory<SplashCubit>(() => SplashCubit());
-  }
-}
 
 setupPaymentService() {
   if (!GetIt.I.isRegistered<CreatePaymentIntentUsecase>()) {
