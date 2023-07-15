@@ -19,7 +19,7 @@ class _BackToTopButtonState extends State<BackToTopButton> {
   }
 
   _listener() {
-    double showoffset = 10.0;
+    double showoffset = 15.0;
     if (widget.scrollController.offset > showoffset) {
       showBtn = true;
       setState(() {});

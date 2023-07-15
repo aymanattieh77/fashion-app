@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fashion_app/core/utils/values.dart';
+
 import 'package:fashion_app/view/home/widgets/profile/personal_information_section.dart';
 import 'package:fashion_app/view/home/widgets/profile/profile_header_section.dart';
 import 'package:fashion_app/view/home/widgets/profile/rating_order_progress_section.dart';

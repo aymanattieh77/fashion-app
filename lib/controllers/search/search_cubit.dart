@@ -29,7 +29,7 @@ class SearchCubit extends Cubit<SearchState> {
     });
   }
 
-  getProdcutsBySearch(BuildContext context, String q,
+  Future<void> getProdcutsBySearch(BuildContext context, String q,
       {required bool isFirstFetch}) async {
     if (q.isEmpty) {
       return;
@@ -82,6 +82,11 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   onSubmit(BuildContext context, String searchValue) {
+    FocusScope.of(context).unfocus(); // to close keyboard
+    if (searchValue.isEmpty) {
+      return;
+    }
+
     searchProducts.clear();
     _prefs.saveRecentSearches(searchValue);
     emit(SaveRecentSearches());

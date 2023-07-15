@@ -1,14 +1,15 @@
-import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:fashion_app/controllers/user/user_cubit.dart';
 
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
+import 'package:fashion_app/core/functions/state_renderer.dart';
 
 import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
 
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonalInformationSection extends StatelessWidget {
   const PersonalInformationSection({super.key});
@@ -45,18 +46,25 @@ class PersonalInformationSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _rowText(
-                          label: AppStrings.name, value: cubit.user!.username),
+                        label: AppStrings.name,
+                        value: cubit.user!.username,
+                      ),
                       _rowText(
-                          label: AppStrings.email, value: cubit.user!.email),
+                        label: AppStrings.email,
+                        value: cubit.user!.email,
+                      ),
                       _rowText(
-                          label: AppStrings.location,
-                          value: cubit.user!.location!),
+                        label: AppStrings.location,
+                        value: cubit.user!.location!,
+                      ),
                       _rowText(
-                          label: AppStrings.zipcode,
-                          value: cubit.user!.zipCode!),
+                        label: AppStrings.zipcode,
+                        value: cubit.user!.zipCode!,
+                      ),
                       _rowText(
-                          label: AppStrings.phoneNumber,
-                          value: cubit.user!.phoneNumber!),
+                        label: AppStrings.phoneNumber,
+                        value: cubit.user!.phoneNumber!,
+                      ),
                     ],
                   ),
                 ),

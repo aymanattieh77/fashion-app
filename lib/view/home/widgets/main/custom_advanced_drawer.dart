@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 import 'package:fashion_app/core/extensions/theme_extension.dart';
+
 import 'package:fashion_app/core/utils/colors.dart';
 
 class CustomAdvancedDrawer extends StatelessWidget {

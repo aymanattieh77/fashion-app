@@ -76,7 +76,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }) async {
     Map<String, dynamic> queriesParameters = {
       'q': q,
-      'limit': limit ?? 15,
+      'limit': limit ?? 20,
       'store': "US",
       'offset': offset ?? 0,
       'sort': sort ?? "freshness",

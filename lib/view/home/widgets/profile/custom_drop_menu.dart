@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/routes/routes.dart';
-
 import 'package:fashion_app/core/utils/strings.dart';
-
-import 'package:flutter/material.dart';
 
 class CustomDropMenu extends StatelessWidget {
   const CustomDropMenu({

@@ -1,12 +1,14 @@
 import 'dart:math';
 
-import 'package:fashion_app/core/errors/exceptions.dart';
-import 'package:fashion_app/domain/entities/product/product_category.dart';
-import 'package:fashion_app/domain/entities/product/product_entity.dart';
-import 'package:fashion_app/domain/usecases/home/get_home_products_usecase.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:fashion_app/core/errors/exceptions.dart';
+
+import 'package:fashion_app/domain/entities/product/product_category.dart';
+import 'package:fashion_app/domain/entities/product/product_entity.dart';
+
+import 'package:fashion_app/domain/usecases/home/get_home_products_usecase.dart';
 
 part 'home_state.dart';
 
@@ -29,6 +31,24 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> onRefresh() async {
     await getHomeProdcuts();
+  }
+
+  getHomeProdcuts() async {
+    emit(HomeProductLoading());
+    try {
+      await _getProductByCategory(MenCategory.shirts);
+      await _getProductByCategory(MenCategory.suitsAndTailoring);
+      await _getProductByCategory(WomenCategory.dresses);
+      await _getProductByCategory(WomenCategory.jeans);
+      await _getProductByCategory(WomenCategory.tops);
+      await _getProductByCategory(WomenCategory.shoes);
+      await _getProductByCategory(MenCategory.shoesAndSneakers);
+      await _getProductByCategory(MenCategory.shorts);
+      await _getProductByCategory(MenCategory.tShirtsAndTankTops);
+      emit(HomeProductLoaded());
+    } on ServerException catch (e) {
+      emit(HomeProductsFailure(e.message));
+    }
   }
 
   int _generateRandomNumber() {
@@ -58,24 +78,6 @@ class HomeCubit extends Cubit<HomeState> {
 
       default:
         return [];
-    }
-  }
-
-  getHomeProdcuts() async {
-    emit(HomeProductLoading());
-    try {
-      await _getProductByCategory(MenCategory.shirts);
-      await _getProductByCategory(MenCategory.suitsAndTailoring);
-      await _getProductByCategory(WomenCategory.dresses);
-      await _getProductByCategory(WomenCategory.jeans);
-      await _getProductByCategory(WomenCategory.tops);
-      await _getProductByCategory(WomenCategory.shoes);
-      await _getProductByCategory(MenCategory.shoesAndSneakers);
-      await _getProductByCategory(MenCategory.shorts);
-      await _getProductByCategory(MenCategory.tShirtsAndTankTops);
-      emit(HomeProductLoaded());
-    } on ServerException catch (e) {
-      emit(HomeProductsFailure(e.message));
     }
   }
 
