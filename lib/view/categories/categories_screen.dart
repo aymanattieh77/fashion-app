@@ -1,9 +1,9 @@
-import 'package:fashion_app/view/widgets/common/back_to_top_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/controllers/category_product/category_product_cubit.dart';
 import 'package:fashion_app/view/categories/widgets/custom_category_appbar.dart';
+import 'package:fashion_app/view/widgets/common/back_to_top_button.dart';
 
 import 'widgets/category_body_section.dart';
 

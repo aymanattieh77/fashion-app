@@ -20,8 +20,8 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
   bool isLoadMore = false;
   List<ProductEntity> productsList = [];
 
-  start(BuildContext context, int categoryID) {
-    getProducts(context, categoryID, isFirstFetch: true); //frist fetch products
+ void start(BuildContext context, int categoryID) {
+    getProducts(context, categoryID, isFirstFetch: true); //first fetch products
     // add Listener in scrollController
     scrollController.addListener(() {
       loadMoreProducts(context, categoryID: categoryID);
@@ -46,7 +46,7 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
     );
   }
 
-  loadMoreProducts(BuildContext context, {required int categoryID}) async {
+ Future<void> loadMoreProducts(BuildContext context, {required int categoryID}) async {
     if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
@@ -55,13 +55,6 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
       offset++;
       await getProducts(context, categoryID, isFirstFetch: false);
     }
-  }
-
-  _backToTop() {
-    scrollController.animateTo(0, //scroll offset to go
-        duration: const Duration(milliseconds: 500), //duration of scroll
-        curve: Curves.fastOutSlowIn //scroll type
-        );
   }
 
   _load() {
@@ -98,6 +91,13 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
         ),
       ),
     );
+  }
+
+  _backToTop() {
+    scrollController.animateTo(0, //scroll offset to go
+        duration: const Duration(milliseconds: 500), //duration of scroll
+        curve: Curves.fastOutSlowIn //scroll type
+        );
   }
 
   dispose() {
