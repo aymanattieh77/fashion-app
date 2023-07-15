@@ -60,7 +60,7 @@ class PaymentCubit extends Cubit<PaymentState> {
       // to display payment sheet
       await Stripe.instance.presentPaymentSheet();
       // ignore: use_build_context_synchronously
-      context.goTo(const PaymentScreen(), true);
+      goToPaymentSuccessfully(context);
     } on Exception catch (e) {
       if (e is StripeException) {
         log("Error from Stripe: ${e.error.localizedMessage}");
