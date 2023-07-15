@@ -1,16 +1,13 @@
+import 'package:fashion_app/controllers/app/app_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
-import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/config/services/service_locator.dart';
 
 import 'package:fashion_app/core/utils/values.dart';
-import 'package:fashion_app/view/product_details/product_details_screen.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../controllers/product_detail/product_detail_cubit.dart';
 import '../../../core/utils/utils.dart';
 
 class ProductCard extends StatelessWidget {
@@ -28,14 +25,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        setupProductDetail();
-        context.goTo(
-          BlocProvider(
-            create: (context) =>
-                getIt<ProductDetailCubit>()..getProdcutDetailById(id),
-            child: ProductDetailsScreen(productId: id),
-          ),
-        );
+        BlocProvider.of<AppCubit>(context).goToProductDetailScreen(context, id);
       },
       child: SizedBox(
         width: context.setWidth(0.42),

@@ -155,7 +155,7 @@ setupThemeService() {
 }
 
 setupUserService() {
-  if (!GetIt.I.isRegistered<GetUserProfileByIdUseCase>()) {
+  if (!GetIt.I.isRegistered<UserCubit>()) {
     getIt.registerLazySingleton<GetUserProfileByIdUseCase>(
         () => GetUserProfileByIdUseCase(getIt()));
     getIt.registerLazySingleton<DeleteUserProfileUsecase>(

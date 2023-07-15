@@ -20,7 +20,7 @@ abstract class AppPrefs {
   Future<void> deleteUserUid();
 
   bool isUserLoginIn();
-  String get userUid;
+  String? get userUid;
 
   void saveRecentSearches(String searchValue);
   List<String> getRecentSearches();
@@ -63,8 +63,7 @@ class AppPrefsImpl implements AppPrefs {
 
   @override
   bool isUserLoginIn() {
-    String? uid = _prefs.getString(isLogged);
-    if (uid != null) {
+    if (userUid != null) {
       return true;
     } else {
       return false;
@@ -72,7 +71,7 @@ class AppPrefsImpl implements AppPrefs {
   }
 
   @override
-  String get userUid => _prefs.getString(isLogged) ?? "";
+  String? get userUid => _prefs.getString(isLogged);
 
   @override
   saveRecentSearches(String searchValue) {

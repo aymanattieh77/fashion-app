@@ -1,12 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fashion_app/config/routes/route_context.dart';
+import 'package:fashion_app/config/routes/routes.dart';
 
 import 'package:fashion_app/core/utils/strings.dart';
-import 'package:fashion_app/view/settings/profile_settings.dart';
 
 import 'package:flutter/material.dart';
-
-import '../../../settings/settings_screen.dart';
 
 class CustomDropMenu extends StatelessWidget {
   const CustomDropMenu({
@@ -32,10 +30,10 @@ class CustomDropMenu extends StatelessWidget {
       }).toList(),
       onChanged: (_) {
         if (_ == AppStrings.settings.tr()) {
-          context.goTo(const SettingScreen());
+          context.goToNamed(route: Routes.settings);
         }
         if (_ == AppStrings.accountSettings.tr()) {
-          context.goTo(const ProfileSettings());
+          context.goToNamed(route: Routes.account);
         }
       },
     );

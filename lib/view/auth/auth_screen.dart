@@ -37,12 +37,6 @@ class _AuthScreenState extends State<AuthScreen> {
         if (state is AuthLoading) {
           showFullScreenLoadingState(context);
         }
-        if (state is AuthSuccess) {
-          cubit.saveUserProfile(context);
-        }
-        if (state is AuthFailure) {
-          return;
-        }
       },
       child: _screenContent(context),
     );

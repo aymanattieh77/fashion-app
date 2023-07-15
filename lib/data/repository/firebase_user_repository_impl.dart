@@ -15,9 +15,9 @@ class FirebaseUserRepositoryImpl implements FirebaseUserRepository {
   final UserRemoteDataSource _dataSource;
   FirebaseUserRepositoryImpl(this._dataSource);
   @override
-  Future<Either<Failure, UserModel>> getUserProfileById() async {
+  Future<Either<Failure, UserModel>> getUserProfileById(String userUid) async {
     try {
-      final doc = await _dataSource.getUserProfileById();
+      final doc = await _dataSource.getUserProfileById(userUid);
 
       if (doc.exists && doc.data() != null) {
         return Right(UserModel.fromMap(doc.data()!));
@@ -29,13 +29,14 @@ class FirebaseUserRepositoryImpl implements FirebaseUserRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createUserProfile(UserModel user) async {
+  Future<Either<Failure, void>> createUserProfile(
+      UserModel user, String userUid) async {
     try {
-      final doc = await _dataSource.getUserProfileById();
+      final doc = await _dataSource.getUserProfileById(userUid);
       if (doc.exists) {
         return const Left(FirebaseFailure('User Already Exist'));
       }
-      await _dataSource.createUserProfile(user);
+      await _dataSource.createUserProfile(user, userUid);
       return const Right(Void);
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
@@ -43,9 +44,9 @@ class FirebaseUserRepositoryImpl implements FirebaseUserRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteUserProfile() async {
+  Future<Either<Failure, void>> deleteUserProfile(String userUid) async {
     try {
-      await _dataSource.deleteUserProfile();
+      await _dataSource.deleteUserProfile(userUid);
       return const Right(Void);
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
@@ -53,9 +54,10 @@ class FirebaseUserRepositoryImpl implements FirebaseUserRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateUserProfile(UserModel user) async {
+  Future<Either<Failure, void>> updateUserProfile(
+      UserModel user, String usersUid) async {
     try {
-      await _dataSource.updateUserProfile(user);
+      await _dataSource.updateUserProfile(user, usersUid);
       return const Right(Void);
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));

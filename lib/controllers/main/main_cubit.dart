@@ -3,13 +3,9 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/config/services/service_locator.dart';
 import 'package:fashion_app/controllers/auth/auth_cubit.dart';
-import 'package:fashion_app/controllers/category_product/category_product_cubit.dart';
-import 'package:fashion_app/controllers/filter/filter_cubit.dart';
 import 'package:fashion_app/core/functions/function.dart';
 import 'package:fashion_app/core/utils/strings.dart';
-import 'package:fashion_app/view/categories/categories_screen.dart';
 import 'package:fashion_app/view/home/pages/catalog_page.dart';
 import 'package:fashion_app/view/home/pages/home_page.dart';
 import 'package:fashion_app/view/home/pages/profile_page.dart';
@@ -43,23 +39,6 @@ class MainCubit extends Cubit<MainState> {
 
   dispose() {
     advancedDrawerController.dispose();
-  }
-
-  goToCategoriesPage(
-      BuildContext context, int categoryId, String categoryName) {
-    setupCategoryProduct();
-    context.goTo(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => FilterCubit()),
-          BlocProvider(create: (_) => getIt<CategoryProductCubit>()),
-        ],
-        child: CategoriesScreen(
-          categoryId: categoryId,
-          categoryName: categoryName,
-        ),
-      ),
-    );
   }
 
   signOut(BuildContext context) {

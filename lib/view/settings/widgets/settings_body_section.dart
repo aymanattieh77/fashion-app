@@ -67,14 +67,6 @@ class SettingsBodySection extends StatelessWidget {
                 //TODO Turn on Notitfications
               },
             ),
-            swaithListTile(
-              title: AppStrings.update,
-              icon: AssetsIconPath.update,
-              value: false,
-              onChanged: (val) {
-                // TODO Turn on Update
-              },
-            ),
             BlocBuilder<ThemeCubit, ThemeMode>(
               builder: (context, state) {
                 // Switch To Dark Theme or Vice versa

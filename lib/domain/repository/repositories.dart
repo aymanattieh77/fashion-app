@@ -50,10 +50,12 @@ abstract class SearchProductRepository {
 }
 
 abstract class FirebaseUserRepository {
-  Future<Either<Failure, void>> createUserProfile(UserModel user);
-  Future<Either<Failure, UserModel>> getUserProfileById();
-  Future<Either<Failure, void>> updateUserProfile(UserModel user);
-  Future<Either<Failure, void>> deleteUserProfile();
+  Future<Either<Failure, void>> createUserProfile(
+      UserModel user, String userId);
+  Future<Either<Failure, UserModel>> getUserProfileById(String userId);
+  Future<Either<Failure, void>> updateUserProfile(
+      UserModel user, String userId);
+  Future<Either<Failure, void>> deleteUserProfile(String userId);
 }
 
 abstract class FirebaseAddressRepository {

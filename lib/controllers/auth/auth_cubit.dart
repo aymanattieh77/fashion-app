@@ -22,6 +22,7 @@ import 'package:fashion_app/domain/usecases/auth/auth_usecase.dart';
 import 'package:fashion_app/domain/usecases/auth/login_usecase.dart';
 import 'package:fashion_app/domain/usecases/auth/sign_up_usecase.dart';
 import 'package:fashion_app/domain/usecases/base_usecase.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 part 'auth_state.dart';
 
@@ -136,8 +137,9 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (s) {
         emit(AuthSuccess());
-        _prefs.deleteUserUid();
-        context.pushRemoveUntil(Routes.auth);
+        _prefs.deleteUserUid().then((value) {
+          Phoenix.rebirth(context);
+        });
       },
     );
   }
@@ -149,7 +151,8 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (r) {
         emit(AuthSuccess());
-        showSnackMessage(context, message: "Email Successfully Changed");
+
+        showToastMessage("Email Successfully Changed");
       },
     );
   }
@@ -157,15 +160,18 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> saveUserProfile(BuildContext context) async {
     if (_user != null) {
       final userModel = UserModel(
-        uid: _prefs.userUid,
+        uid: _prefs.userUid ?? "",
         username: _user!.displayName ?? usernameController.text,
         email: _user!.email ?? emailController.text,
         profilePhoto: _user!.photoURL ?? AppConstants.profilePicturePlaceholder,
       );
 
-      BlocProvider.of<UserCubit>(context).createUserprofile(userModel).then(
+      BlocProvider.of<UserCubit>(context)
+          .createUserprofile(userModel, userModel.uid)
+          .then(
         (value) async {
-          await BlocProvider.of<UserCubit>(context).getUserProfileById();
+          await BlocProvider.of<UserCubit>(context)
+              .getUserProfileById(userModel.uid);
         },
       );
     }
@@ -209,10 +215,13 @@ class AuthCubit extends Cubit<AuthState> {
     return;
   }
 
-  void _success(BuildContext context, User user) {
-    _prefs.saveUserUid(user.uid);
+  void _success(BuildContext context, User user) async {
+    await _prefs.saveUserUid(user.uid);
     _user = user;
+    // ignore: use_build_context_synchronously
+    await saveUserProfile(context);
     emit(AuthSuccess());
+    // ignore: use_build_context_synchronously
     context.goToNamed(route: Routes.home, replacement: true);
   }
 

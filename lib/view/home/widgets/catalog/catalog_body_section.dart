@@ -1,9 +1,8 @@
+import 'package:fashion_app/controllers/app/app_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:fashion_app/controllers/main/main_cubit.dart';
 
 import 'package:fashion_app/domain/entities/product/product_category.dart';
 
@@ -63,8 +62,8 @@ class ProductCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BlocProvider.of<MainCubit>(context)
-            .goToCategoriesPage(context, categoryId, categoryName);
+        BlocProvider.of<AppCubit>(context)
+            .goToProductCategoriesPage(context, categoryId, categoryName);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,48 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fashion_app/config/services/prefs.dart';
-import 'package:fashion_app/config/services/service_locator.dart';
+
 import 'package:fashion_app/core/utils/constants.dart';
 import 'package:fashion_app/domain/entities/account/user.dart';
 
 abstract class FirebaseUserService {
-  Future<void> createUserProfile(UserModel user);
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserProfileById();
-  Future<void> updateUserProfile(UserModel user);
-  Future<void> deleteUserProfile();
+  Future<void> createUserProfile(UserModel user, String userUid);
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserProfileById(
+      String userUid);
+  Future<void> updateUserProfile(UserModel user, String userUid);
+  Future<void> deleteUserProfile(String userUid);
 }
 
 class FirebaseUserServiceImpl implements FirebaseUserService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final userId = getIt<AppPrefs>().userUid;
+
   @override
-  createUserProfile(UserModel user) async {
+  createUserProfile(UserModel user, String userUid) async {
     await firestore
         .collection(AppConstants.usersCollection)
-        .doc(userId)
+        .doc(userUid)
         .set(user.toMap());
   }
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserProfileById() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserProfileById(
+      String userUid) async {
     return await firestore
         .collection(AppConstants.usersCollection)
-        .doc(userId)
+        .doc(userUid)
         .get();
   }
 
   @override
-  updateUserProfile(UserModel user) async {
+  updateUserProfile(UserModel user, String userUid) async {
     await firestore
         .collection(AppConstants.usersCollection)
-        .doc(userId)
+        .doc(userUid)
         .update(user.toMap());
   }
 
   @override
-  deleteUserProfile() async {
+  deleteUserProfile(userUid) async {
     await firestore
         .collection(AppConstants.usersCollection)
-        .doc(userId)
+        .doc(userUid)
         .delete();
   }
 }

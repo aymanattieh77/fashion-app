@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     mainCubit = BlocProvider.of<MainCubit>(context);
   }
 

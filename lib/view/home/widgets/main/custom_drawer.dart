@@ -69,14 +69,6 @@ class CustomDrawer extends StatelessWidget {
               context.goToNamed(route: Routes.favourite);
             },
           ),
-          // IconWithTitle(
-          //   icon: AssetsIconPath.wallet,
-          //   title: AppStrings.wallets,
-          //   onTap: () {
-          //     // Go to My Wallets Screen
-          //     context.goToNamed(route: Routes.myWallets);
-          //   },
-          // ),
           IconWithTitle(
             icon: AssetsIconPath.bag,
             title: AppStrings.myOrders,
@@ -105,6 +97,7 @@ class CustomDrawer extends StatelessWidget {
             title: AppStrings.settings,
             onTap: () {
               // Go to Settings Screen
+
               context.goToNamed(route: Routes.settings);
             },
           ),

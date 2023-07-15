@@ -1,3 +1,4 @@
+import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -48,6 +49,7 @@ abstract class Routes {
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    //final args = settings.arguments;
     switch (settings.name) {
       case Routes.splash:
         return screen(_splash());
@@ -98,8 +100,13 @@ class AppRouter {
 
   static _auth() {
     setupAuthService();
-    return BlocProvider(
-      create: (context) => getIt<AuthCubit>(),
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<AuthCubit>(),
+        ),
+      ],
       child: const AuthScreen(),
     );
   }
@@ -107,6 +114,7 @@ class AppRouter {
   static _home() {
     setupAuthService();
     setupHomeService();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AuthCubit>()),
@@ -123,8 +131,8 @@ class AppRouter {
 
   static _account() {
     setupAuthService();
-    return BlocProvider(
-      create: (context) => getIt<AuthCubit>(),
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => getIt<AuthCubit>())],
       child: const ProfileSettings(),
     );
   }
@@ -185,4 +193,10 @@ class AppRouter {
       child: const SearchPage(),
     );
   }
+}
+
+class SettingsInputs {
+  AuthCubit authCubit;
+  UserCubit userCubit;
+  SettingsInputs(this.authCubit, this.userCubit);
 }

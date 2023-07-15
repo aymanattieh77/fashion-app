@@ -78,7 +78,6 @@ class AddressCubit extends Cubit<AddressState> {
     (await _repository.getSavedAddress()).fold(
       (failure) {
         emit(AddressFailure());
-        showToastMessage("Feilad clear address");
       },
       (address) {
         addressList = address;
@@ -93,7 +92,6 @@ class AddressCubit extends Cubit<AddressState> {
     (await _repository.addAddress(address)).fold(
       (failure) {
         emit(AddressFailure());
-        showToastMessage("Feilad clear address");
       },
       (r) {
         addressList.add(address);
@@ -107,7 +105,6 @@ class AddressCubit extends Cubit<AddressState> {
     (await _repository.deleteAddress(index)).fold(
       (l) {
         emit(AddressFailure());
-        showToastMessage("Feilad clear address");
       },
       (r) {
         addressList.removeAt(index);
@@ -138,10 +135,8 @@ class AddressCubit extends Cubit<AddressState> {
     (await _repository.clearAddress()).fold(
       (failure) {
         emit(AddressFailure());
-        showToastMessage("Feilad clear address");
       },
       (r) {
-        showToastMessage("Feilad clear address");
         addressList.clear();
         emit(AddressLoaded());
       },

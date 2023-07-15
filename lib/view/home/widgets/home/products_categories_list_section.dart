@@ -1,8 +1,8 @@
+import 'package:fashion_app/controllers/app/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/controllers/home/home_cubit.dart';
-import 'package:fashion_app/controllers/main/main_cubit.dart';
 
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/core/utils/values.dart';
@@ -71,7 +71,7 @@ class ProductsCategoriesListSection extends StatelessWidget {
   }
 
   _seeAllTap(BuildContext context) {
-    BlocProvider.of<MainCubit>(context)
-        .goToCategoriesPage(context, categoryId, title);
+    BlocProvider.of<AppCubit>(context)
+        .goToProductCategoriesPage(context, categoryId, title);
   }
 }

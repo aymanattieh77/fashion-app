@@ -26,7 +26,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   @override
   void initState() {
     super.initState();
-    cubit = BlocProvider.of<UserCubit>(context)..getUserProfileById();
+    cubit = BlocProvider.of<UserCubit>(context);
 
     if (cubit.user != null) {
       username.text = cubit.user!.username;
@@ -48,65 +48,67 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             builder: (context, state) {
               return Column(
                 children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () {
-                      // TODO Pick an image From Camera Or Gallery
-                    },
-                    child: SizedBox(
-                      width: AppSizes.s100 - 20,
-                      height: AppSizes.s100 - 20,
-                      child: Stack(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        children: [
-                          CircleAvatar(
-                            radius: 45,
-                            backgroundImage:
-                                NetworkImage(cubit.user?.profilePhoto ?? ""),
-                          ),
-                          const Icon(Icons.camera_alt, color: AppColor.gray),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // InkWell(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   onTap: () {
+                  //     // TODO Pick an image From Camera Or Gallery
+                  //   },
+                  //   child: SizedBox(
+                  //     width: AppSizes.s100 - 20,
+                  //     height: AppSizes.s100 - 20,
+                  //     child: Stack(
+                  //       alignment: AlignmentDirectional.bottomEnd,
+                  //       children: [
+                  //         CircleAvatar(
+                  //           radius: 45,
+                  //           backgroundImage:
+                  //               NetworkImage(cubit.user?.profilePhoto ?? ""),
+                  //         ),
+                  //         const Icon(Icons.camera_alt, color: AppColor.gray),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   CustomInputField(
                     icon: AssetsIconPath.profile,
-                    hint: 'Username',
+                    hint: AppStrings.username,
                     filedType: FieldType.text,
                     controller: username,
                   ),
                   CustomInputField(
                     icon: AssetsIconPath.email,
-                    hint: 'Email',
+                    hint: AppStrings.email,
                     controller: email,
                     filedType: FieldType.text,
                   ),
                   CustomInputField(
                     icon: AssetsIconPath.profile,
-                    hint: 'Phone',
+                    hint: AppStrings.phoneNumber,
                     controller: phone,
                     filedType: FieldType.text,
                   ),
                   const CustomInputField(
                     icon: AssetsIconPath.profile,
-                    hint: '11011',
+                    hint: AppStrings.zipcode,
                     filedType: FieldType.text,
                   ),
                   CustomInputField(
                     icon: AssetsIconPath.profile,
-                    hint: 'jordan',
+                    hint: AppStrings.location,
                     controller: location,
                     filedType: FieldType.text,
                   ),
                   CustomElevatedButton(
                     label: AppStrings.update,
                     press: () async {
-                      await cubit.updateUserProfile(context,
-                          username: username.text,
-                          email: email.text,
-                          phone: phone.text,
-                          location: location.text,
-                          zipcode: zipcode.text);
+                      await cubit.updateUserProfile(
+                        context,
+                        username: username.text,
+                        email: email.text,
+                        phone: phone.text,
+                        location: location.text,
+                        zipcode: zipcode.text,
+                      );
                     },
                   ),
                 ],

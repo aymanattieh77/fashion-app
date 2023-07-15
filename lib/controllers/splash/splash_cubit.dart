@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/routes/routes.dart';
 import 'package:fashion_app/config/services/prefs.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:fashion_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,6 @@ class SplashCubit extends Cubit<SplashState> {
   _goNext(BuildContext context) {
     if (_prefs.isCompleteOnBoarding()) {
       if (_prefs.isUserLoginIn()) {
-        BlocProvider.of<UserCubit>(context).getUserProfileById();
         context.goToNamed(route: Routes.home, replacement: true);
       } else {
         context.goToNamed(route: Routes.auth, replacement: true);

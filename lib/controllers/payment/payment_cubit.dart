@@ -113,12 +113,9 @@ class PaymentCubit extends Cubit<PaymentState> {
         line2: '',
         postalCode: "",
         state: selectAddress?.state);
-    print(address.city);
-    print(address.country);
 
     final user = _getUser(context);
-    print(user?.email);
-    print(user?.username);
+
     return BillingDetails(
         address: address,
         email: user?.email,
