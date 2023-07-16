@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/controllers/auth/auth_cubit.dart';
 import 'package:fashion_app/core/functions/function.dart';
 import 'package:fashion_app/domain/entities/account/user.dart';
 import 'package:fashion_app/domain/usecases/user/delete_user_profile_usecase.dart';
@@ -89,9 +88,9 @@ class UserCubit extends Cubit<UserState> {
           location: location,
           zipCode: zipcode,
           profilePhoto: profilePhoto);
-      if (email != null && email.isNotEmpty) {
-        BlocProvider.of<AuthCubit>(context).updateEmail(context, email);
-      }
+      // if (email != null && email.isNotEmpty) {
+      //   BlocProvider.of<AuthCubit>(context).updateEmail(context, email);
+      // }
       (await _updateusecase.call(UpdateUserInputs(newUser, newUser.uid))).fold(
         (failure) {
           showToastMessage(failure.message);

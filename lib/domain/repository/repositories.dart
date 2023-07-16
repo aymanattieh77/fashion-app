@@ -17,6 +17,8 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> signInWithGoogle();
   Future<Either<Failure, User>> signInWithFacebook();
   Future<Either<Failure, void>> updateEmail(String newEmail);
+  Future<Either<Failure, void>> reAuthenticatesUser(
+      String newEmail, String password);
 }
 
 abstract class HomeRepository {

@@ -10,3 +10,7 @@ abstract class ProfileState extends Equatable {
 class ProfileInitial extends ProfileState {}
 
 class ProfileFailure extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {}
+
+class ProfileReAuthenticate extends ProfileState {}

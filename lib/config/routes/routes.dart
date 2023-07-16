@@ -1,6 +1,5 @@
 import 'package:fashion_app/controllers/profile/profile_cubit.dart';
 import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/data/remote/firebase_storage/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -132,12 +131,10 @@ class AppRouter {
   }
 
   static _account() {
-    setupAuthService();
+    setupProfileService();
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<AuthCubit>()),
-        BlocProvider(
-            create: (context) => ProfileCubit(getIt<StorageService>())),
+        BlocProvider(create: (context) => getIt<ProfileCubit>()),
       ],
       child: const ProfileSettings(),
     );

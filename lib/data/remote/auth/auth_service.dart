@@ -13,6 +13,7 @@ abstract class AuthService {
   Future<void> updateEmail(String newEmail);
   Future<void> updateUsername(String username);
   Future<void> updateProfileImage(String image);
+  Future<void> reAuthenticatesUser(String email, String password);
   User? get getUserProfile;
   String? get getUserId;
 }

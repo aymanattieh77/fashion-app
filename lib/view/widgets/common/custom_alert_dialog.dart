@@ -16,11 +16,13 @@ class CustomAlertDialog extends StatelessWidget {
       this.cancelText = 'Cancel',
       this.confirmText = 'Confirm',
       required this.onCancel,
-      required this.onConfirm});
+      required this.onConfirm,
+      this.content});
 
   final String message;
   final String cancelText;
   final String confirmText;
+  final Widget? content;
   final void Function() onCancel;
   final void Function() onConfirm;
 
@@ -52,6 +54,7 @@ class CustomAlertDialog extends StatelessWidget {
             fontWe: FontWe.bold,
             textAlign: TextAlign.center,
           ),
+          if (content != null) content!,
           const SizedBox(height: AppSizes.s20),
           Row(
             children: [

@@ -82,7 +82,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       return const Left(FirebaseFailure("Auth Failure"));
     } on AuthException catch (e) {
-      return Left(FirebaseFailure(e.toString()));
+      return Left(FirebaseFailure(e.message));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }
@@ -103,6 +103,21 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _authService.updateEmail(newEmail);
       return const Right(Void);
+    } on AuthException catch (e) {
+      return Left(FirebaseFailure(e.message));
+    } catch (e) {
+      return Left(FirebaseFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> reAuthenticatesUser(
+      String newEmail, String password) async {
+    try {
+      await _authService.reAuthenticatesUser(newEmail, password);
+      return const Right(Void);
+    } on AuthException catch (e) {
+      return Left(FirebaseFailure(e.message));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }

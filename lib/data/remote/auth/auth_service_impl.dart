@@ -159,11 +159,32 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<void> updateEmail(String newEmail) async {
-    final user = getUserProfile;
+    try {
+      final user = getUserProfile;
+      if (user != null) {
+        await user.updateEmail(newEmail);
+      } else {
+        return;
+      }
+    } on FirebaseAuthException catch (e) {
+      throw AuthException(message: e.message ?? e.toString());
+    }
+  }
+
+  @override
+  Future<void> reAuthenticatesUser(String email, String password) async {
+    User? user = auth.currentUser;
+
     if (user != null) {
-      await user.updateEmail(newEmail);
-    } else {
-      return;
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      try {
+        await user.reauthenticateWithCredential(credential);
+        // User has been successfully reauthenticated
+      } on FirebaseAuthException catch (e) {
+        throw AuthException(message: e.message ?? e.toString());
+      }
     }
   }
 }

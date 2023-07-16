@@ -1,6 +1,7 @@
 import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/controllers/payment/payment_cubit.dart';
+import 'package:fashion_app/controllers/profile/profile_cubit.dart';
 import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
 import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
@@ -9,6 +10,7 @@ import 'package:fashion_app/data/remote/payment/payment_service.dart';
 import 'package:fashion_app/data/repository/firebase_address_repository_impl.dart';
 import 'package:fashion_app/data/repository/firebase_favourites_repository_impl.dart';
 import 'package:fashion_app/data/repository/payment_repository_impl.dart';
+import 'package:fashion_app/domain/usecases/auth/reauthenticate_user_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/add_favourite_product_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/clear_favourites_products_usecase.dart';
 import 'package:fashion_app/domain/usecases/favourites/delete_favourite_product_usecase.dart';
@@ -213,6 +215,8 @@ setupAuthUsecase() {
       () => SignoutUsecase(getIt<AuthRepository>()));
   getIt.registerLazySingleton<UpdateEmailUsecase>(
       () => UpdateEmailUsecase(getIt<AuthRepository>()));
+  getIt.registerLazySingleton<ReAuthenticatesUserUsecase>(
+      () => ReAuthenticatesUserUsecase(getIt<AuthRepository>()));
 
   getIt.registerLazySingleton<AuthUsecases>(() => AuthUsecases(
         loginUsecase: getIt(),
@@ -277,5 +281,15 @@ void setupAuthService() {
   if (!GetIt.I.isRegistered<AuthCubit>()) {
     setupAuthUsecase();
     getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthUsecases>()));
+  }
+}
+
+void setupProfileService() {
+  if (!GetIt.I.isRegistered<ProfileCubit>()) {
+    getIt.registerFactory<ProfileCubit>(() => ProfileCubit(
+          getIt<StorageService>(),
+          getIt<UpdateEmailUsecase>(),
+          getIt<ReAuthenticatesUserUsecase>(),
+        ));
   }
 }
