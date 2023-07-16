@@ -50,6 +50,7 @@ class CustomAlertDialog extends StatelessWidget {
             text: message,
             fontSize: 16,
             fontWe: FontWe.bold,
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSizes.s20),
           Row(

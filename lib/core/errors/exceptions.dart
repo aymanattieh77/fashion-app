@@ -11,3 +11,10 @@ class AuthException implements Exception {
     required this.message,
   });
 }
+
+class FireException implements Exception {
+  final String message;
+  FireException({
+    required this.message,
+  });
+}

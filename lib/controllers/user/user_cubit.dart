@@ -79,15 +79,16 @@ class UserCubit extends Cubit<UserState> {
       String? email,
       String? phone,
       String? location,
+      String? profilePhoto,
       String? zipcode}) async {
     if (_user != null) {
       final newUser = _user!.copyWith(
-        username: username,
-        email: email,
-        phoneNumber: phone,
-        location: location,
-        zipCode: zipcode,
-      );
+          username: username,
+          email: email,
+          phoneNumber: phone,
+          location: location,
+          zipCode: zipcode,
+          profilePhoto: profilePhoto);
       if (email != null && email.isNotEmpty) {
         BlocProvider.of<AuthCubit>(context).updateEmail(context, email);
       }

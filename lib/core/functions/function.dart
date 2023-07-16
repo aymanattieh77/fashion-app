@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fashion_app/core/extensions/theme_extension.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 
 void showSnackMessage(BuildContext context, {required String message}) {
   final SnackBar snackBar = SnackBar(
@@ -56,4 +59,15 @@ showCustomBottomSheet(BuildContext context, Widget child) {
       borderRadius: BorderRadius.circular(30),
     ),
   );
+}
+
+Future<File?> pickImage(ImageSource source) async {
+  final picker = ImagePicker();
+  final pickedFile = await picker.pickImage(source: source);
+
+  if (pickedFile != null) {
+    return File(pickedFile.path);
+  } else {
+    return null;
+  }
 }

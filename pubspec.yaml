@@ -50,6 +50,8 @@ dependencies:
   fluttertoast: ^8.2.2
   cloud_firestore: ^4.8.2
   flutter_stripe: ^9.2.2
+  image_picker: ^1.0.1
+  firebase_storage: ^11.2.5
   
   
 

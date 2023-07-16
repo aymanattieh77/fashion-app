@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:fashion_app/controllers/profile/profile_cubit.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,27 +52,29 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             builder: (context, state) {
               return Column(
                 children: [
-                  // InkWell(
-                  //   borderRadius: BorderRadius.circular(30),
-                  //   onTap: () {
-                  //     // TODO Pick an image From Camera Or Gallery
-                  //   },
-                  //   child: SizedBox(
-                  //     width: AppSizes.s100 - 20,
-                  //     height: AppSizes.s100 - 20,
-                  //     child: Stack(
-                  //       alignment: AlignmentDirectional.bottomEnd,
-                  //       children: [
-                  //         CircleAvatar(
-                  //           radius: 45,
-                  //           backgroundImage:
-                  //               NetworkImage(cubit.user?.profilePhoto ?? ""),
-                  //         ),
-                  //         const Icon(Icons.camera_alt, color: AppColor.gray),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(30),
+                    onTap: () {
+                      //  Pick an image From Camera Or Gallery
+                      BlocProvider.of<ProfileCubit>(context)
+                          .updateProfilePicture(context);
+                    },
+                    child: SizedBox(
+                      width: AppSizes.s100 - 20,
+                      height: AppSizes.s100 - 20,
+                      child: Stack(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        children: [
+                          CircleAvatar(
+                            radius: 45,
+                            backgroundImage:
+                                NetworkImage(cubit.user?.profilePhoto ?? ""),
+                          ),
+                          const Icon(Icons.camera_alt, color: AppColor.gray),
+                        ],
+                      ),
+                    ),
+                  ),
                   CustomInputField(
                     icon: AssetsIconPath.profile,
                     hint: AppStrings.username,
@@ -118,6 +124,18 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         ),
       ),
     );
+  }
+
+  Future<String> _uploadAnImage(File file) async {
+    final storage = FirebaseStorage.instance;
+    Reference storageReference = storage
+        .ref()
+        .child('images/${DateTime.now().millisecondsSinceEpoch.toString()}');
+    UploadTask uploadTask = storageReference.putFile(file);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+    return imageUrl;
   }
 
   @override

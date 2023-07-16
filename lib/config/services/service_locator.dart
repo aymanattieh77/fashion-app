@@ -4,6 +4,7 @@ import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
 import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
+import 'package:fashion_app/data/remote/firebase_storage/storage_service.dart';
 import 'package:fashion_app/data/remote/payment/payment_service.dart';
 import 'package:fashion_app/data/repository/firebase_address_repository_impl.dart';
 import 'package:fashion_app/data/repository/firebase_favourites_repository_impl.dart';
@@ -95,7 +96,7 @@ setupAPIService() {
       () => FirebaseFavouriteServiceImpl());
 
   getIt.registerLazySingleton<PaymentService>(() => PaymentService(dio));
-  //TODO
+  getIt.registerLazySingleton<StorageService>(() => StorageServiceImpl());
 }
 
 setupRemoteDataSource() {
