@@ -1,20 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fashion_app/config/services/prefs.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/core/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:fashion_app/app.dart';
 import 'package:fashion_app/config/language/language_manager.dart';
+import 'package:fashion_app/config/services/prefs.dart';
 import 'package:fashion_app/config/services/service_locator.dart';
 import 'package:fashion_app/controllers/app/app_cubit.dart';
 import 'package:fashion_app/controllers/bloc_observer/my_bloc_observer.dart';
 import 'package:fashion_app/controllers/cart/cart_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fashion_app/controllers/user/user_cubit.dart';
+import 'package:fashion_app/core/utils/utils.dart';
 
 import 'controllers/theme/theme_cubit.dart';
 

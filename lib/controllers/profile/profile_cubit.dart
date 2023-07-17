@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:fashion_app/config/routes/route_context.dart';
+import 'package:fashion_app/config/services/permissions.dart';
+import 'package:fashion_app/config/services/service_locator.dart';
 import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:fashion_app/core/errors/exceptions.dart';
 import 'package:fashion_app/core/extensions/string_extension.dart';
@@ -29,6 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final StorageService _storageService;
   final UpdateEmailUsecase _updateEmailUsecase;
   final ReAuthenticatesUserUsecase _reAuthenticatesUser;
+  final permissions = getIt<AppPermissions>();
   String? image;
   final username = TextEditingController();
   final email = TextEditingController();
@@ -48,18 +51,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  pickProfilePicture(BuildContext context) {
-    showCustomDialog(
+  pickImageFromCameraOrGallery(BuildContext context) async {
+    await showCustomDialog(
       context,
       CustomAlertDialog(
-        message: "Pick an image from Camera or Gallery!",
-        cancelText: 'Camera',
-        confirmText: 'Gallery',
+        message: AppStrings.pickImageGalleryCamera,
+        cancelText: AppStrings.camera,
+        confirmText: AppStrings.gallery,
         onCancel: () {
-          _pickImage(context, ImageSource.camera);
+          _requsetImageSource(context, ImageSource.camera);
         },
         onConfirm: () {
-          _pickImage(context, ImageSource.gallery);
+          _requsetImageSource(context, ImageSource.gallery);
         },
       ),
     );
@@ -72,8 +75,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       (await _updateEmailUsecase.call(email.text)).fold(
         (failure) async {
           showToastMessage(failure.message);
-
-          await _reAuthenticates(context);
+          await _reLoginUserAccounnt(context);
           return;
         },
         (r) async {
@@ -93,19 +95,33 @@ class ProfileCubit extends Cubit<ProfileState> {
     return;
   }
 
-  String profilePciture(BuildContext context) {
+  String profileImage(BuildContext context) {
     final userImage = BlocProvider.of<UserCubit>(context).user?.profilePhoto ??
         AppConstants.profilePicturePlaceholder;
     return image ?? userImage;
   }
 
+  _requsetImageSource(BuildContext context, ImageSource source) async {
+    final bool isGrand = source == ImageSource.gallery
+        ? await permissions.requestPhotosPermission()
+        : await permissions.requestCameraPermission();
+
+    if (isGrand) {
+      // ignore: use_build_context_synchronously
+      _pickImage(context, source);
+    } else {
+      permissions.openSettings();
+    }
+  }
+
   _pickImage(BuildContext context, ImageSource imageSource) async {
-    final file =
-        await pickImage(imageSource); // pick image from gallery or camera
+    // pick image from gallery or camera
+    final file = await pickImage(imageSource);
     // ignore: use_build_context_synchronously
     dismissDialog(context);
     if (file != null) {
-      final imagePath = await _uploadAnImage(file);
+      // store image path in firebase storage
+      final imagePath = await _uploadAnImageFirebaseStorage(file);
 
       image = imagePath;
       emit(ProfileUpdated());
@@ -114,7 +130,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     return;
   }
 
-  Future<String?> _uploadAnImage(File file) async {
+  Future<String?> _uploadAnImageFirebaseStorage(File file) async {
     try {
       return await _storageService.uploadAnImage(file);
     } on FireException catch (e) {
@@ -124,11 +140,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     return null;
   }
 
-  _reAuthenticates(BuildContext context) async {
+  _reLoginUserAccounnt(BuildContext context) async {
     showCustomDialog(
       context,
       CustomAlertDialog(
-        message: "Re login Enter Your Password",
+        message: AppStrings.reLogin,
         content: CustomInputField(
           icon: AssetsIconPath.lock,
           hint: AppStrings.password,
@@ -141,19 +157,23 @@ class ProfileCubit extends Cubit<ProfileState> {
           context.back();
         },
         onConfirm: () async {
-          (await _reAuthenticatesUser
-                  .call(LoginUsecaseInputs(email.text, password.text)))
-              .fold(
-            (failure) {
-              showToastMessage(failure.message);
-              emit(ProfileFailure());
-            },
-            (_) {
-              emit(ProfileReAuthenticate());
-            },
-          );
+          await _reAuthenticateUser();
         },
       ),
+    );
+  }
+
+  _reAuthenticateUser() async {
+    (await _reAuthenticatesUser
+            .call(LoginUsecaseInputs(email.text, password.text)))
+        .fold(
+      (failure) {
+        showToastMessage(failure.message);
+        emit(ProfileFailure());
+      },
+      (_) {
+        emit(ProfileReAuthenticate());
+      },
     );
   }
 

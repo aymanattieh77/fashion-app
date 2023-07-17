@@ -14,6 +14,9 @@
     "cancel":"ألغاء",
     "or":"أو",
     "change_language":"تغير الغة",
+    "pick_image_camera_gallery":"اختر صورة من الكاميرا أو المعرض!",
+    "camera":"الكاميرا",
+    "gallery":"المعرض",
     "not_found_address":"لا توجد عناوين محفوظة",
     
     "login":"تسجيل الدخول",
@@ -29,6 +32,7 @@
     "terms_conditions":"البنود و الظروف",
     "do_you_want_to_logout":"هل تريد تسجيل الخروج",
     "reset_password":"إعادة تعيين كلمة المرور",
+    "re_login_enter_your_password":"أعد تسجيل الدخول أدخل كلمة المرور الخاصة بك",
     
     "my_favorites":"مفضلتي",
     "wallets":"المحفظة",

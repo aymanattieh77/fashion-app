@@ -13,8 +13,8 @@ class ProfilePictureWidget extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
       onTap: () {
-        //  Pick an image From Camera Or Gallery
-        BlocProvider.of<ProfileCubit>(context).pickProfilePicture(context);
+        BlocProvider.of<ProfileCubit>(context)
+            .pickImageFromCameraOrGallery(context);
       },
       child: SizedBox(
         width: AppSizes.s100 - 20,
@@ -34,7 +34,7 @@ class ProfilePictureWidget extends StatelessWidget {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (_, state) {
         final image =
-            BlocProvider.of<ProfileCubit>(context).profilePciture(context);
+            BlocProvider.of<ProfileCubit>(context).profileImage(context);
         return CircleAvatar(
           radius: 45,
           backgroundImage: NetworkImage(image),

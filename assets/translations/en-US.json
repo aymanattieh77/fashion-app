@@ -14,6 +14,9 @@
 "cancel":"Cancel",
 "not_found_address":"Not Found Saved Address",
 "change_language":"Change Language",
+"pick_image_camera_gallery":"Pick an image from Camera or Gallery!",
+"camera":"Camera",
+"gallery":"Gallery",
 
 
 
@@ -30,6 +33,7 @@
 "terms_conditions":"termsConditions",
 "do_you_want_to_logout":"Do You Want To Logout",
 "reset_password":"Reset Password",
+"re_login_enter_your_password":"Re login Enter Your Password",
 
 "my_favorites":"My favorites",
 "wallets":"Wallets",

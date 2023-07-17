@@ -15,6 +15,9 @@ abstract class AppStrings {
   static const cancel = 'cancel';
 
   static const changeLanguage = 'change_language';
+  static const pickImageGalleryCamera = 'pick_image_camera_gallery';
+  static const camera = 'camera';
+  static const gallery = 'gallery';
 
   // auth strings
   static const login = 'login';
@@ -30,6 +33,7 @@ abstract class AppStrings {
   static const termsConditions = 'terms_conditions';
   static const doYouWantToLogout = 'do_you_want_to_logout';
   static const resetPassword = 'reset_password';
+  static const reLogin = 're_login_enter_your_password';
 
   // drawer siderbar strings
   static const myFavorites = 'my_favorites';
