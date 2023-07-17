@@ -52,6 +52,7 @@ dependencies:
   flutter_stripe: ^9.2.2
   image_picker: ^1.0.1
   firebase_storage: ^11.2.5
+  flutter_dotenv: ^5.1.0
   
   
 
@@ -72,6 +73,7 @@ flutter:
 
  
   assets:
+    - .env
     - assets/images/
     - assets/icons/
     - assets/jsons/

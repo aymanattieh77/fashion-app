@@ -25,8 +25,7 @@ class _PaymentService implements PaymentService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
-      'Authorization':
-          'Bearer sk_test_51NSlfpHJsv61vsrnHEREa4AnuandBVeAb3p6lE1HobihXJvMckfk5YEbtcYp2tAMVZ6lSMePg029KXy6zJtfGtv800Btnwvkn8',
+      'Authorization': 'Bearer ${dotenv.env[AppConstants.stripeKey]}',
       'Content-Type': 'application/x-www-form-urlencoded'
     };
     final _data = <String, dynamic>{};
