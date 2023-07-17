@@ -29,8 +29,11 @@ class DeliveryAddressSection extends StatelessWidget {
         ),
         BlocBuilder<AddressCubit, AddressState>(
           builder: (context, state) {
-            if (BlocProvider.of<AddressCubit>(context).addressList.isEmpty) {
+            if (state is AddressLoading) {
               return loadingCircularWidget();
+            }
+            if (BlocProvider.of<AddressCubit>(context).addressList.isEmpty) {
+              return const TextUtils(text: AppStrings.notFoundAddress);
             }
             return DeliveryAddressCard(
               address: BlocProvider.of<CheckoutCubit>(context)

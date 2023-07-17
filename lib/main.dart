@@ -25,7 +25,8 @@ void main() async {
   await serviceLocatorStart();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  Stripe.publishableKey = AppConstants.stripeKey;
+  Stripe.publishableKey =
+      dotenv.env[AppConstants.stripePublishableKey] as String;
   await Stripe.instance.applySettings();
 
   Bloc.observer = MyBlocObserver();

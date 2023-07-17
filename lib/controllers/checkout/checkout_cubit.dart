@@ -22,7 +22,12 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     return BlocProvider.of<AddressCubit>(context).addressList;
   }
 
-  AddressEntity getSelectedAddress(BuildContext context) {
+  AddressEntity? getSelectedAddress(BuildContext context) {
+    final res = getSavedAddress(context);
+    if (res.isEmpty) {
+      return null;
+    }
+
     return getSavedAddress(context)[addressCheck];
   }
 

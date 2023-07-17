@@ -3,6 +3,7 @@ abstract class AppConstants {
   static const fontFamilyAr = 'Cairo';
   static const apiKey = 'API_KEY';
   static const stripeKey = 'Stripe_Key';
+  static const stripePublishableKey = 'Stripe_Publishable_key';
   static const apiHost = 'API_Host';
   static const stripeBaseUrl = 'https://api.stripe.com/v1';
   static const baseUrl = 'https://asos2.p.rapidapi.com';

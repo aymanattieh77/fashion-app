@@ -103,24 +103,26 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   BillingDetails getBillingDetails(BuildContext context) {
-    final selectAddress = BlocProvider.of<CheckoutCubit>(context)
-        .getSelectedAddress(context)
-        .addressLocation;
-    final address = Address(
-        city: selectAddress?.city,
-        country: selectAddress?.country,
-        line1: selectAddress?.street,
-        line2: '',
-        postalCode: "",
-        state: selectAddress?.state);
+    final selectAddress =
+        BlocProvider.of<CheckoutCubit>(context).getSelectedAddress(context);
 
+    final addressLocation = selectAddress?.addressLocation;
+    final address = Address(
+      city: addressLocation?.city,
+      country: addressLocation?.country,
+      line1: addressLocation?.street,
+      line2: '',
+      postalCode: "",
+      state: addressLocation?.state,
+    );
     final user = _getUser(context);
 
     return BillingDetails(
-        address: address,
-        email: user?.email,
-        name: user?.username,
-        phone: user?.phoneNumber);
+      address: address,
+      email: user?.email,
+      name: user?.username,
+      phone: user?.phoneNumber,
+    );
   }
 
   UserModel? _getUser(BuildContext context) {
