@@ -83,6 +83,7 @@ serviceLocatorStart() async {
   setupRemoteDataSource();
   setupAppRepositories();
   setupUserService();
+  setupFavouritesService();
 }
 
 setupAppService() async {
@@ -112,11 +113,11 @@ setupAPIService() {
       () => NetworkInfoImpl(InternetConnectionChecker()));
   getIt.registerLazySingleton<DioFactroy>(() => DioFactroyImpl());
 
-  final headers = <String, String>{
+  final productServiceHeaders = <String, String>{
     "X-RapidAPI-Key": dotenv.env[AppConstants.apiKey] as String,
     "X-RapidAPI-Host": dotenv.env[AppConstants.apiHost] as String
   };
-  final productServiceDio = getIt<DioFactroy>().getDio(headers);
+  final productServiceDio = getIt<DioFactroy>().getDio(productServiceHeaders);
   getIt.registerLazySingleton<ProductService>(
       () => ProductService(productServiceDio));
 
@@ -127,8 +128,11 @@ setupAPIService() {
       () => FirebaseAddressServiceImpl());
   getIt.registerLazySingleton<FirebaseFavouriteService>(
       () => FirebaseFavouriteServiceImpl());
-
-  final paymentServiceDio = getIt<DioFactroy>().getDio();
+  final paymentServiceHeaders = <String, String>{
+    'Authorization': 'Bearer ${dotenv.env[AppConstants.stripeKey]}',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+  final paymentServiceDio = getIt<DioFactroy>().getDio(paymentServiceHeaders);
   getIt.registerLazySingleton<PaymentService>(
       () => PaymentService(paymentServiceDio));
 

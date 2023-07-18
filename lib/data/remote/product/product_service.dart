@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:fashion_app/core/utils/constants.dart';
 import 'package:fashion_app/data/models/product/product_detail_model.dart';
 import 'package:fashion_app/data/models/product/product_response.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'product_service.g.dart';

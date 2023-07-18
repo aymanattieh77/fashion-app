@@ -43,7 +43,9 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         emit(FavouriteFailure());
       },
       (_) {
-        getFavouritesProducts();
+        favouriteProducts.add(productsFavourite);
+        emit(FavouriteSuccess());
+        // getFavouritesProducts();
       },
     );
   }
@@ -60,6 +62,8 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         emit(FavouriteFailure());
       },
       (_) {
+        favouriteProducts.clear();
+        emit(FavouriteSuccess());
         getFavouritesProducts();
       },
     );
@@ -78,8 +82,10 @@ class FavouriteCubit extends Cubit<FavouriteState> {
         emit(FavouriteFailure());
       },
       (_) {
-        //favouriteProducts.removeWhere((element) => element.id == productId);
-        getFavouritesProducts();
+        favouriteProducts
+            .removeWhere((element) => element.productId == productId);
+        emit(FavouriteSuccess());
+        // getFavouritesProducts();
       },
     );
   }

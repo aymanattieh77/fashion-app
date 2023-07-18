@@ -5,9 +5,11 @@ import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/routes/routes.dart';
 import 'package:fashion_app/controllers/cart/cart_cubit.dart';
 import 'package:fashion_app/controllers/user/user_cubit.dart';
+import 'package:fashion_app/domain/entities/account/address.dart' as ad;
 import 'package:fashion_app/domain/entities/account/user.dart';
 
 import 'package:fashion_app/view/payment/payment_screen.dart';
+import 'package:fashion_app/view/widgets/common/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -25,15 +27,21 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentEntity? paymentEntity;
   BillingDetails? _billingDetails;
   final CreatePaymentIntentUsecase _intentUsecase;
-
+  ad.AddressEntity? _addressEntity;
   Future<void> makePayment(
     BuildContext context,
   ) async {
     try {
+      _billingDetails = getBillingDetails(context);
       await _createPaymentIntent(totalPrice(context), "USD");
+      if (_addressEntity == null) {
+        // ignore: use_build_context_synchronously
+        showAddressDialog(context);
+        return;
+      }
       if (paymentEntity != null) {
         // ignore: use_build_context_synchronously
-        _billingDetails = getBillingDetails(context);
+
         await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             customFlow: true,
@@ -103,10 +111,10 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   BillingDetails getBillingDetails(BuildContext context) {
-    final selectAddress =
+    _addressEntity =
         BlocProvider.of<CheckoutCubit>(context).getSelectedAddress(context);
 
-    final addressLocation = selectAddress?.addressLocation;
+    final addressLocation = _addressEntity?.addressLocation;
     final address = Address(
       city: addressLocation?.city,
       country: addressLocation?.country,
@@ -139,6 +147,24 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   getYourReceipt(BuildContext context) {
     //TODO
+  }
+
+  showAddressDialog(BuildContext context) {
+    showCustomDialog(
+      context,
+      CustomAlertDialog(
+        message:
+            "You must Have at least one address, Please go to deilvery address and create address",
+        confirmText: 'Add Address',
+        onCancel: () {
+          dismissDialog(context);
+        },
+        onConfirm: () {
+          dismissDialog(context);
+          context.goToNamed(route: Routes.delivery);
+        },
+      ),
+    );
   }
 
   backToHome(BuildContext context) {

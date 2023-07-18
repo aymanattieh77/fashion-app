@@ -1,13 +1,11 @@
-import 'package:fashion_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/controllers/filter/filter_cubit.dart';
 import 'package:fashion_app/core/functions/function.dart';
-import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/domain/entities/product/product_entity.dart';
 import 'package:fashion_app/domain/usecases/category/get_products_by_filter_usecase.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../view/widgets/common/filtering_widget.dart';
 

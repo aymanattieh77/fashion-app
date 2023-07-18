@@ -1,15 +1,12 @@
-import 'package:fashion_app/controllers/app/app_cubit.dart';
-import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
-import 'package:fashion_app/core/extensions/media_query_extension.dart';
-
-import 'package:fashion_app/core/utils/values.dart';
-import 'package:fashion_app/domain/entities/account/favourites.dart';
-import 'package:fashion_app/view/widgets/common/text_utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import '../../../core/utils/utils.dart';
+
+import 'package:fashion_app/controllers/app/app_cubit.dart';
+import 'package:fashion_app/core/extensions/media_query_extension.dart';
+import 'package:fashion_app/core/utils/values.dart';
+import 'package:fashion_app/view/widgets/common/text_utils.dart';
+import 'package:fashion_app/view/widgets/product/favourite_icon_button.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard(
@@ -55,37 +52,11 @@ class ProductCard extends StatelessWidget {
                   fontWe: FontWe.medium,
                 ),
                 const Spacer(),
-                BlocBuilder<FavouriteCubit, FavouriteState>(
-                  builder: (context, state) {
-                    bool isFav = BlocProvider.of<FavouriteCubit>(context)
-                        .isFavourite(id);
-                    return InkWell(
-                      onTap: () {
-                        final prodFav = ProductsFavourite(
-                          productId: id,
-                          name: label,
-                          price: price,
-                          imageUrl: image,
-                        );
-                        BlocProvider.of<FavouriteCubit>(context)
-                            .favBtn(prodFav, id);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(AppPadding.p5),
-                        decoration: const BoxDecoration(
-                            color: AppColor.white, shape: BoxShape.circle),
-                        child: SvgPicture.asset(
-                          isFav
-                              ? AssetsIconPath.heart
-                              : AssetsIconPath.heartBorder,
-                          colorFilter: isFav
-                              ? null
-                              : const ColorFilter.mode(
-                                  AppColor.black, BlendMode.srcIn),
-                        ),
-                      ),
-                    );
-                  },
+                FavouriteIconButton(
+                  productId: id,
+                  name: label,
+                  image: image,
+                  price: price,
                 ),
               ],
             ),

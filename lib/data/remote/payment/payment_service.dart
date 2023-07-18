@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fashion_app/core/utils/constants.dart';
 import 'package:fashion_app/data/models/payment/payment_response.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'payment_service.g.dart';

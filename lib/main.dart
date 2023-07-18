@@ -21,16 +21,10 @@ import 'controllers/theme/theme_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-  await serviceLocatorStart();
-  await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp();
-  Stripe.publishableKey =
-      dotenv.env[AppConstants.stripePublishableKey] as String;
-  await Stripe.instance.applySettings();
+  await startInitialize();
 
   Bloc.observer = MyBlocObserver();
-  setupFavouritesService();
+
   runApp(
     EasyLocalization(
       supportedLocales: const [englishLocale, arabicLocale],
@@ -44,13 +38,21 @@ void main() async {
             BlocProvider(
                 create: (context) => getIt<UserCubit>()
                   ..getUserProfileById(getIt<AppPrefs>().userUid)),
-            BlocProvider(
-                create: (context) =>
-                    getIt<FavouriteCubit>()..getFavouritesProducts()),
+            BlocProvider(create: (context) => getIt<FavouriteCubit>()),
           ],
           child: const FashionApp(),
         ),
       ),
     ),
   );
+}
+
+startInitialize() async {
+  await dotenv.load();
+  await serviceLocatorStart();
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+  Stripe.publishableKey =
+      dotenv.env[AppConstants.stripePublishableKey] as String;
+  await Stripe.instance.applySettings();
 }

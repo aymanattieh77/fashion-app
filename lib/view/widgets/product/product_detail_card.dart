@@ -1,17 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
 import 'package:fashion_app/core/extensions/theme_extension.dart';
-import 'package:fashion_app/config/routes/route_context.dart';
-
 import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/domain/entities/product/product_detail_entity.dart';
 import 'package:fashion_app/view/product_details/widgets/custom_color_picker.dart';
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:fashion_app/view/widgets/product/favourite_icon_button.dart';
 
 class ProductDetailCard extends StatelessWidget {
   const ProductDetailCard({
@@ -57,16 +57,22 @@ class ProductDetailCard extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               const Spacer(),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(AppPadding.p5),
-                  decoration: const BoxDecoration(
-                    color: AppColor.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: SvgPicture.asset(AssetsIconPath.heart),
-                ),
+              // InkWell(
+              //   onTap: () {},
+              //   child: Container(
+              //     padding: const EdgeInsets.all(AppPadding.p5),
+              //     decoration: const BoxDecoration(
+              //       color: AppColor.white,
+              //       shape: BoxShape.circle,
+              //     ),
+              //     child: SvgPicture.asset(AssetsIconPath.heart),
+              //   ),
+              // ),
+              FavouriteIconButton(
+                productId: entity.id,
+                name: entity.name,
+                image: entity.images[0],
+                price: entity.currentPrice,
               ),
             ],
           ),
