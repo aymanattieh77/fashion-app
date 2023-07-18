@@ -33,7 +33,10 @@ class UserCubit extends Cubit<UserState> {
   }
 
   // read
-  getUserProfileById(String userUid) async {
+  getUserProfileById(String? userUid) async {
+    if (userUid == null) {
+      return;
+    }
     (await _getUsecase.call(userUid)).fold(
       (failure) {
         //   showToastMessage(failure.message);
@@ -88,9 +91,7 @@ class UserCubit extends Cubit<UserState> {
           location: location,
           zipCode: zipcode,
           profilePhoto: profilePhoto);
-      // if (email != null && email.isNotEmpty) {
-      //   BlocProvider.of<AuthCubit>(context).updateEmail(context, email);
-      // }
+
       (await _updateusecase.call(UpdateUserInputs(newUser, newUser.uid))).fold(
         (failure) {
           showToastMessage(failure.message);

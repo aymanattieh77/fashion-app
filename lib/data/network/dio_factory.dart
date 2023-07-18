@@ -1,21 +1,15 @@
 import 'package:dio/dio.dart';
-import 'package:fashion_app/core/utils/constants.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-const rapidApiKey = 'X-RapidAPI-Key';
-const rapidApiHost = 'X-RapidAPI-Host';
+abstract class DioFactroy {
+  Dio getDio([Map<String, String>? headers]);
+}
 
-class DioFactroy {
-  late Dio dio;
-
-  DioFactroy() {
-    final headers = {
-      rapidApiKey: dotenv.env[AppConstants.apiKey],
-      rapidApiHost: dotenv.env[AppConstants.apiHost],
-    };
-
+class DioFactroyImpl implements DioFactroy {
+  @override
+  Dio getDio([Map<String, String>? headers]) {
+    Dio dio;
     final baseOptions = BaseOptions(
       connectTimeout: const Duration(milliseconds: 1000 * 30),
       receiveTimeout: const Duration(milliseconds: 1000 * 30),
@@ -23,15 +17,15 @@ class DioFactroy {
       receiveDataWhenStatusError: true,
       headers: headers,
     );
-
     dio = Dio(baseOptions);
-
     if (kDebugMode) {
       dio.interceptors.add(
         PrettyDioLogger(
           responseBody: false,
+          requestHeader: true,
         ),
       );
     }
+    return dio;
   }
 }

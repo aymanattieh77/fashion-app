@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/core/functions/state_renderer.dart';
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/view/widgets/product/product_card.dart';
 import 'package:fashion_app/view/widgets/state_renderer/empty_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavouriteBodySection extends StatelessWidget {
   const FavouriteBodySection({super.key});
@@ -46,15 +47,16 @@ class FavouriteBodySection extends StatelessWidget {
                 return ProductCard(
                   id: BlocProvider.of<FavouriteCubit>(context)
                       .favouriteProducts[index]
-                      .id,
+                      .productId,
                   image: BlocProvider.of<FavouriteCubit>(context)
                       .favouriteProducts[index]
-                      .images[0],
+                      .imageUrl,
                   label: BlocProvider.of<FavouriteCubit>(context)
                       .favouriteProducts[index]
                       .name,
-                  price:
-                      '\$${BlocProvider.of<FavouriteCubit>(context).favouriteProducts[index].currentPrice}0',
+                  price: BlocProvider.of<FavouriteCubit>(context)
+                      .favouriteProducts[index]
+                      .price,
                 );
               });
         },

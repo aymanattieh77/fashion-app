@@ -5,13 +5,10 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:fashion_app/config/language/language_manager.dart';
 import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/config/routes/routes.dart';
 import 'package:fashion_app/config/services/prefs.dart';
 import 'package:fashion_app/config/services/service_locator.dart';
-import 'package:fashion_app/controllers/auth/auth_cubit.dart';
 import 'package:fashion_app/controllers/category_product/category_product_cubit.dart';
 import 'package:fashion_app/controllers/filter/filter_cubit.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:fashion_app/core/functions/function.dart';
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/view/categories/categories_screen.dart';
@@ -51,14 +48,6 @@ class AppCubit extends Cubit<AppState> {
           _changeLanguage(context, LanguageType.english);
         },
       ),
-    );
-  }
-
-  provideSettingsInputs(BuildContext context) {
-    context.goToNamed(
-      route: Routes.account,
-      args: SettingsInputs(BlocProvider.of<AuthCubit>(context),
-          BlocProvider.of<UserCubit>(context)),
     );
   }
 

@@ -1,80 +1,82 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:fashion_app/config/services/prefs.dart';
-
 import 'package:fashion_app/core/utils/constants.dart';
 
 import 'package:fashion_app/domain/entities/account/favourites.dart';
 
-import 'package:fashion_app/config/services/service_locator.dart';
-
 abstract class FirebaseFavouriteService {
-  Future<DocumentSnapshot<Map<String, dynamic>>> getFavourtiesProducts();
-  Future<void> deleteFavouriteProduct(int productId);
-  Future<void> clearFavouritesProducts();
-  Future<void> addFavouriteProduct(int productId);
+  Future<List<ProductsFavourite>> getFavourtiesProducts(String userUid);
+  Future<void> deleteFavouriteProduct(int productId, String userUid);
+  Future<void> clearFavouritesProducts(String userUid);
+  Future<void> addFavouriteProduct(
+      ProductsFavourite productFav, String userUid);
 }
 
 class FirebaseFavouriteServiceImpl implements FirebaseFavouriteService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final userId = getIt<AppPrefs>().userUid;
+
   @override
-  Future<void> clearFavouritesProducts() async {
+  Future<void> clearFavouritesProducts(String userUid) async {
     await firestore
         .collection(AppConstants.favouritesCollection)
-        .doc(userId)
+        .doc(userUid)
         .delete();
   }
 
   @override
-  Future<void> deleteFavouriteProduct(int productId) async {
+  Future<void> deleteFavouriteProduct(int productId, String userUid) async {
     final doc = await firestore
         .collection(AppConstants.favouritesCollection)
-        .doc(userId)
+        .doc(userUid)
         .get();
 
     if (doc.exists && doc.data() != null) {
       final fav = Favourites.fromMap(doc.data()!);
 
-      fav.productsId.removeWhere((id) => id == productId);
+      fav.favourites.removeWhere((fav) => fav.productId == productId);
 
       await firestore
           .collection(AppConstants.favouritesCollection)
-          .doc(userId)
+          .doc(userUid)
           .set(fav.toMap());
     }
   }
 
   @override
-  getFavourtiesProducts() async {
-    return await firestore
+  Future<List<ProductsFavourite>> getFavourtiesProducts(String userUid) async {
+    final result = await firestore
         .collection(AppConstants.favouritesCollection)
-        .doc(userId)
+        .doc(userUid)
         .get();
+    if (result.exists && result.data() != null) {
+      return Favourites.fromMap(result.data()!).favourites;
+    }
+    return [];
   }
 
   @override
-  Future<void> addFavouriteProduct(int productId) async {
+  Future<void> addFavouriteProduct(
+      ProductsFavourite productFav, String userUid) async {
     final doc = await firestore
         .collection(AppConstants.favouritesCollection)
-        .doc(userId)
+        .doc(userUid)
         .get();
 
     if (doc.exists && doc.data() != null) {
       final fav = Favourites.fromMap(doc.data()!);
-      if (fav.productsId.contains(productId)) {
+      if (fav.favourites.contains(productFav)) {
         return;
       }
-      fav.productsId.add(productId);
+      fav.favourites.add(productFav);
       await firestore
           .collection(AppConstants.favouritesCollection)
-          .doc(userId)
+          .doc(userUid)
           .set(fav.toMap());
     } else {
       await firestore
           .collection(AppConstants.favouritesCollection)
-          .doc(userId)
-          .set(Favourites(productsId: [productId]).toMap());
+          .doc(userUid)
+          .set(Favourites(favourites: [productFav]).toMap());
     }
   }
 }

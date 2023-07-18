@@ -1,33 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
+import 'package:fashion_app/domain/entities/account/favourites.dart';
 
 abstract class FavouriteRemoteDataSource {
-  Future<DocumentSnapshot<Map<String, dynamic>>> getFavourtiesProducts();
-  Future<void> deleteFavouriteProduct(int productId);
-  Future<void> clearFavouritesProducts();
-  Future<void> addFavouriteProduct(int productId);
+  Future<List<ProductsFavourite>> getFavourtiesProducts(String userUid);
+  Future<void> deleteFavouriteProduct(int productId, String userUid);
+  Future<void> clearFavouritesProducts(String userUid);
+  Future<void> addFavouriteProduct(
+      ProductsFavourite productFav, String userUid);
 }
 
 class FavouriteRemoteDataSourceImpl implements FavouriteRemoteDataSource {
   final FirebaseFavouriteService _service;
   FavouriteRemoteDataSourceImpl(this._service);
+
   @override
-  Future<void> addFavouriteProduct(int productId) async {
-    return _service.addFavouriteProduct(productId);
+  Future<void> addFavouriteProduct(
+      ProductsFavourite productFav, String userUid) async {
+    return await _service.addFavouriteProduct(productFav, userUid);
   }
 
   @override
-  Future<void> clearFavouritesProducts() {
-    return _service.clearFavouritesProducts();
+  Future<void> clearFavouritesProducts(String userUid) async {
+    return await _service.clearFavouritesProducts(userUid);
   }
 
   @override
-  Future<void> deleteFavouriteProduct(int productId) {
-    return _service.deleteFavouriteProduct(productId);
+  Future<void> deleteFavouriteProduct(int productId, String userUid) async {
+    return await _service.deleteFavouriteProduct(productId, userUid);
   }
 
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getFavourtiesProducts() {
-    return _service.getFavourtiesProducts();
+  Future<List<ProductsFavourite>> getFavourtiesProducts(String userUid) async {
+    return await _service.getFavourtiesProducts(userUid);
   }
 }

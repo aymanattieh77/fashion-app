@@ -1,5 +1,4 @@
 import 'package:fashion_app/controllers/profile/profile_cubit.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -101,7 +100,6 @@ class AppRouter {
 
   static _auth() {
     setupAuthService();
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -115,7 +113,6 @@ class AppRouter {
   static _home() {
     setupAuthService();
     setupHomeService();
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AuthCubit>()),
@@ -196,10 +193,4 @@ class AppRouter {
       child: const SearchPage(),
     );
   }
-}
-
-class SettingsInputs {
-  AuthCubit authCubit;
-  UserCubit userCubit;
-  SettingsInputs(this.authCubit, this.userCubit);
 }

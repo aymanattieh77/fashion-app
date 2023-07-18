@@ -2,6 +2,7 @@ import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/controllers/payment/payment_cubit.dart';
 import 'package:fashion_app/controllers/profile/profile_cubit.dart';
+import 'package:fashion_app/core/utils/constants.dart';
 import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
 import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
 import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
@@ -17,6 +18,7 @@ import 'package:fashion_app/domain/usecases/favourites/delete_favourite_product_
 import 'package:fashion_app/domain/usecases/favourites/get_favourites_products_usecase.dart';
 import 'package:fashion_app/domain/usecases/payment/create_payment_intent_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,20 +77,49 @@ final getIt = GetIt.instance;
 
 serviceLocatorStart() async {
   await setupAppService();
-  await setupThemeService();
-  await setupLocalDataService();
-  await setupAPIService();
-  await setupRemoteDataSource();
-  await setupAppRepositories();
-  await setupUserService();
+  setupThemeService();
+  setupLocalDataService();
+  setupAPIService();
+  setupRemoteDataSource();
+  setupAppRepositories();
+  setupUserService();
+}
+
+setupAppService() async {
+  final prefs = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<AppPrefs>(() => AppPrefsImpl(prefs));
+  getIt.registerLazySingleton<AppCubit>(() => AppCubit());
+  getIt.registerLazySingleton<AppPermissions>(() => AppPermissionsImpl());
+}
+
+setupThemeService() {
+  final isDark = getIt<AppPrefs>().isDark();
+  if (GetIt.I.isRegistered<ThemeCubit>()) {
+    getIt.unregister<ThemeCubit>();
+  }
+  getIt.registerFactory<ThemeCubit>(
+      () => ThemeCubit(isDark ? ThemeMode.dark : ThemeMode.light));
+}
+
+setupLocalDataService() {
+  getIt.registerLazySingleton<LocationService>(() => LocationServiceImpl());
+  getIt.registerLazySingleton<LocationLocalDataSource>(
+      () => LocationLocalDataSourceImpl(getIt()));
 }
 
 setupAPIService() {
-  getIt.registerLazySingleton<DioFactroy>(() => DioFactroy());
-  final dio = getIt<DioFactroy>().dio;
   getIt.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnectionChecker()));
-  getIt.registerLazySingleton<ProductService>(() => ProductService(dio));
+  getIt.registerLazySingleton<DioFactroy>(() => DioFactroyImpl());
+
+  final headers = <String, String>{
+    "X-RapidAPI-Key": dotenv.env[AppConstants.apiKey] as String,
+    "X-RapidAPI-Host": dotenv.env[AppConstants.apiHost] as String
+  };
+  final productServiceDio = getIt<DioFactroy>().getDio(headers);
+  getIt.registerLazySingleton<ProductService>(
+      () => ProductService(productServiceDio));
+
   getIt.registerLazySingleton<AuthService>(() => AuthServiceImpl());
   getIt.registerLazySingleton<FirebaseUserService>(
       () => FirebaseUserServiceImpl());
@@ -97,7 +128,10 @@ setupAPIService() {
   getIt.registerLazySingleton<FirebaseFavouriteService>(
       () => FirebaseFavouriteServiceImpl());
 
-  getIt.registerLazySingleton<PaymentService>(() => PaymentService(dio));
+  final paymentServiceDio = getIt<DioFactroy>().getDio();
+  getIt.registerLazySingleton<PaymentService>(
+      () => PaymentService(paymentServiceDio));
+
   getIt.registerLazySingleton<StorageService>(() => StorageServiceImpl());
 }
 
@@ -130,31 +164,9 @@ setupAppRepositories() {
   getIt.registerLazySingleton<FirebaseAddressRepository>(
       () => FirebaseAddressRepositoryImpl(getIt()));
   getIt.registerLazySingleton<FirebaseFavouriteRepository>(
-      () => FirebaseFavouritesRepositoryImpl(getIt(), getIt()));
+      () => FirebaseFavouritesRepositoryImpl(getIt()));
   getIt.registerLazySingleton<PaymentRepository>(
       () => PaymentRepositoryImpl(getIt()));
-}
-
-setupLocalDataService() {
-  getIt.registerLazySingleton<LocationService>(() => LocationServiceImpl());
-  getIt.registerLazySingleton<LocationLocalDataSource>(
-      () => LocationLocalDataSourceImpl(getIt()));
-}
-
-setupAppService() async {
-  final prefs = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton<AppPrefs>(() => AppPrefsImpl(prefs));
-  getIt.registerLazySingleton<AppCubit>(() => AppCubit());
-  getIt.registerLazySingleton<AppPermissions>(() => AppPermissionsImpl());
-}
-
-setupThemeService() {
-  final isDark = getIt<AppPrefs>().isDark();
-  if (GetIt.I.isRegistered<ThemeCubit>()) {
-    getIt.unregister<ThemeCubit>();
-  }
-  getIt.registerFactory<ThemeCubit>(
-      () => ThemeCubit(isDark ? ThemeMode.dark : ThemeMode.light));
 }
 
 setupUserService() {

@@ -3,6 +3,7 @@ import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
 import 'package:fashion_app/core/extensions/media_query_extension.dart';
 
 import 'package:fashion_app/core/utils/values.dart';
+import 'package:fashion_app/domain/entities/account/favourites.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +20,7 @@ class ProductCard extends StatelessWidget {
       required this.id});
   final String label;
   final String image;
-  final String price;
+  final double price;
   final int id;
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class ProductCard extends StatelessWidget {
             Row(
               children: [
                 TextUtils(
-                  text: price,
+                  text: '\$${price}0',
                   fontSize: 14,
                   tr: false,
                   fontWe: FontWe.medium,
@@ -60,7 +61,14 @@ class ProductCard extends StatelessWidget {
                         .isFavourite(id);
                     return InkWell(
                       onTap: () {
-                        BlocProvider.of<FavouriteCubit>(context).favBtn(id);
+                        final prodFav = ProductsFavourite(
+                          productId: id,
+                          name: label,
+                          price: price,
+                          imageUrl: image,
+                        );
+                        BlocProvider.of<FavouriteCubit>(context)
+                            .favBtn(prodFav, id);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(AppPadding.p5),

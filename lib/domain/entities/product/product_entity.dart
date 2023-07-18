@@ -1,4 +1,7 @@
-class ProductEntity {
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
+
+class ProductEntity extends Equatable {
   final int id;
   final String name;
   final double price;
@@ -9,7 +12,7 @@ class ProductEntity {
   final String url;
   final String imageUrl;
   final List<String> additionalImageUrls;
-  ProductEntity({
+  const ProductEntity({
     required this.id,
     required this.name,
     required this.price,
@@ -21,4 +24,20 @@ class ProductEntity {
     required this.imageUrl,
     required this.additionalImageUrls,
   });
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      name,
+      price,
+      currency,
+      brandName,
+      colour,
+      productCode,
+      url,
+      imageUrl,
+      additionalImageUrls,
+    ];
+  }
 }

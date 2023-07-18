@@ -24,10 +24,7 @@ class _PaymentService implements PaymentService {
   Future<PaymentResponse> createPaymentIntent(Map<String, dynamic> body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      'Authorization': 'Bearer ${dotenv.env[AppConstants.stripeKey]}',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio
@@ -51,11 +48,7 @@ class _PaymentService implements PaymentService {
   Future<PaymentResponse> retrievePaymentIntent(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      'Authorization':
-          'Bearer sk_test_51NSlfpHJsv61vsrnHEREa4AnuandBVeAb3p6lE1HobihXJvMckfk5YEbtcYp2tAMVZ6lSMePg029KXy6zJtfGtv800Btnwvkn8',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
+    final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<PaymentResponse>(Options(

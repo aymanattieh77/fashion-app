@@ -1,3 +1,4 @@
+import 'package:fashion_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +7,7 @@ import 'package:fashion_app/core/functions/function.dart';
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/domain/entities/product/product_entity.dart';
 import 'package:fashion_app/domain/usecases/category/get_products_by_filter_usecase.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../view/widgets/common/filtering_widget.dart';
 
@@ -20,7 +22,7 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
   bool isLoadMore = false;
   List<ProductEntity> productsList = [];
 
- void start(BuildContext context, int categoryID) {
+  void start(BuildContext context, int categoryID) {
     getProducts(context, categoryID, isFirstFetch: true); //first fetch products
     // add Listener in scrollController
     scrollController.addListener(() {
@@ -46,7 +48,8 @@ class CategoryProductCubit extends Cubit<CategoryProductState> {
     );
   }
 
- Future<void> loadMoreProducts(BuildContext context, {required int categoryID}) async {
+  Future<void> loadMoreProducts(BuildContext context,
+      {required int categoryID}) async {
     if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {

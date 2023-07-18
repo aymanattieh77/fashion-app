@@ -33,7 +33,7 @@ class ServerFailure extends Failure {
     } else if (statusCode == 500) {
       return const ServerFailure(AppStrings.serverError);
     } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(response['error']['message']);
+      return const ServerFailure(AppStrings.serverError);
     } else {
       return const ServerFailure(AppStrings.unknownError);
     }

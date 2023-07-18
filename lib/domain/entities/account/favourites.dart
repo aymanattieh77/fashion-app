@@ -1,51 +1,59 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
+
 class Favourites {
-  final List<int> productsId;
+  final List<ProductsFavourite> favourites;
   Favourites({
-    required this.productsId,
+    required this.favourites,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'productId': productsId,
+      'favourites': favourites.map((x) => x.toMap()).toList(),
     };
   }
 
   factory Favourites.fromMap(Map<String, dynamic> map) {
     return Favourites(
-      productsId: List<int>.from(
-        (map['productId'] as List<dynamic>),
+      favourites: List<ProductsFavourite>.from(
+        (map['favourites'] as List<dynamic>).map<ProductsFavourite>(
+          (x) => ProductsFavourite.fromMap(x as Map<String, dynamic>),
+        ),
       ),
     );
   }
 }
 
-class ProductsFavourite {
-  final int id;
+class ProductsFavourite extends Equatable {
+  final int productId;
   final String name;
   final double price;
   final String imageUrl;
-  ProductsFavourite({
-    required this.id,
+  const ProductsFavourite({
+    required this.productId,
     required this.name,
     required this.price,
     required this.imageUrl,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'productId': productId,
       'name': name,
       'price': price,
       'imageUrl': imageUrl,
     };
   }
 
-  factory ProductsFavourite.fromJson(Map<String, dynamic> json) {
+  factory ProductsFavourite.fromMap(Map<String, dynamic> map) {
     return ProductsFavourite(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      price: json['price'] as double,
-      imageUrl: json['imageUrl'] as String,
+      productId: map['productId'] as int,
+      name: map['name'] as String,
+      price: map['price'] as double,
+      imageUrl: map['imageUrl'] as String,
     );
   }
+
+  @override
+  List<Object> get props => [productId, name, price, imageUrl];
 }

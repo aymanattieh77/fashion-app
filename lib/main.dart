@@ -40,13 +40,13 @@ void main() async {
           providers: [
             BlocProvider(create: (context) => getIt<ThemeCubit>()),
             BlocProvider(create: (context) => getIt<AppCubit>()),
+            BlocProvider(create: (context) => CartCubit()),
             BlocProvider(
                 create: (context) => getIt<UserCubit>()
-                  ..getUserProfileById(getIt<AppPrefs>().userUid ?? "")),
+                  ..getUserProfileById(getIt<AppPrefs>().userUid)),
             BlocProvider(
                 create: (context) =>
                     getIt<FavouriteCubit>()..getFavouritesProducts()),
-            BlocProvider(create: (context) => CartCubit()),
           ],
           child: const FashionApp(),
         ),

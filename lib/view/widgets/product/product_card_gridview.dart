@@ -41,7 +41,7 @@ class ProductCardGirdview extends StatelessWidget {
             id: products[index].id,
             image: products[index].imageUrl,
             label: products[index].name,
-            price: '\$${products[index].price}0',
+            price: products[index].price,
           );
         });
   }

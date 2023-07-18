@@ -27,7 +27,7 @@ class ProductCardListview extends StatelessWidget {
           return ProductCard(
             id: products[index].id,
             label: products[index].name,
-            price: '\$${products[index].price}0',
+            price: products[index].price,
             image: products[index].imageUrl,
           );
         },
