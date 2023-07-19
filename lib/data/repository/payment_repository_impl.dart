@@ -25,7 +25,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
         return Left(
             ServerFailure("Error from Stripe: ${e.error.localizedMessage}"));
       } else {
-        return Left(ServerFailure("Unforeseen error: ${e}"));
+        return Left(ServerFailure("Unforeseen error: $e"));
       }
     } catch (e) {
       return Left(ServerFailure(e.toString()));

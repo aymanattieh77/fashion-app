@@ -5,7 +5,7 @@ import 'package:fashion_app/controllers/map/map_cubit.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/view/delivery/widgets/map/build_map.dart';
 
-import '../widgets/map/location_confirm_widget.dart';
+import 'package:fashion_app/view/delivery/widgets/map/location_confirm_widget.dart';
 
 class CustomGoogleMap extends StatefulWidget {
   const CustomGoogleMap({super.key});
@@ -22,8 +22,6 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     cubit = BlocProvider.of<MapCubit>(context)
       ..checkPermission()
       ..getMyCurrnetLocation();
-
-    // cubit.checkServiceEnabled();
   }
 
   @override

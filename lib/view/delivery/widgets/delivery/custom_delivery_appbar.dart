@@ -1,11 +1,11 @@
-import 'package:fashion_app/controllers/address/address_cubit.dart';
-import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/core/extensions/theme_extension.dart';
-import 'package:fashion_app/core/utils/strings.dart';
-import 'package:fashion_app/view/delivery/pages/edit_address_page.dart';
-import 'package:fashion_app/view/widgets/common/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:fashion_app/config/routes/route_context.dart';
+import 'package:fashion_app/controllers/address/address_cubit.dart';
+import 'package:fashion_app/core/extensions/theme_extension.dart';
+import 'package:fashion_app/core/utils/strings.dart';
+import 'package:fashion_app/view/widgets/common/text_utils.dart';
 
 class CustomDeliveryAppbar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -28,12 +28,8 @@ class CustomDeliveryAppbar extends StatelessWidget
           children: [
             InkWell(
               onTap: () {
-                context.goTo(
-                  BlocProvider.value(
-                    value: BlocProvider.of<AddressCubit>(context),
-                    child: const EditAddressPage(),
-                  ),
-                );
+                BlocProvider.of<AddressCubit>(context)
+                    .goToEditAddressPage(context, null);
               },
               child: const TextUtils(text: AppStrings.add),
             ),

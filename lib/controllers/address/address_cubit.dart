@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/services/service_locator.dart';
 import 'package:fashion_app/controllers/map/map_cubit.dart';
@@ -6,8 +9,8 @@ import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
 import 'package:fashion_app/domain/repository/repositories.dart';
 import 'package:fashion_app/view/delivery/pages/custom_google_map.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fashion_app/view/delivery/pages/edit_address_page.dart';
+import 'package:fashion_app/view/widgets/common/custom_alert_dialog.dart';
 
 part 'address_state.dart';
 
@@ -21,16 +24,6 @@ class AddressCubit extends Cubit<AddressState> {
   final phone = TextEditingController();
   final globalKey = GlobalKey<FormState>();
   final FirebaseAddressRepository _repository;
-
-  start(AddressEntity? address) {
-    if (address != null) {
-      bNum.text = address.buildingNumber.toString();
-      street.text = address.streetName;
-      phone.text = address.phoneNumber;
-      floor.text = address.floor.toString();
-      additional.text = address.additionalDirections.toString();
-    }
-  }
 
   int currentAddressType = 0;
   List<AddressEntity> addressList = [];
@@ -47,31 +40,35 @@ class AddressCubit extends Cubit<AddressState> {
     street: AppStrings.street,
   );
 
-  onAddressTypeChange(index) {
+  void start(AddressEntity? address) {
+    if (address != null) {
+      bNum.text = address.buildingNumber.toString();
+      street.text = address.streetName;
+      phone.text = address.phoneNumber;
+      floor.text = address.floor.toString();
+      additional.text = address.additionalDirections.toString();
+      currentAddressType = getCurrentAddressType(address.addressType);
+      return;
+    }
+    bNum.clear();
+    street.clear();
+    phone.clear();
+    floor.clear();
+    additional.clear();
+    currentAddressType = 0;
+  }
+
+  void onAddressTypeChange(index) {
     currentAddressType = index;
     emit(AddressInitial());
   }
 
-  updateAddressLocation(AddressLocationEntity loc) {
+  void updateAddressLocation(AddressLocationEntity loc) {
     addressLocation = loc;
     emit(AddressInitial());
   }
 
-  AddressType getAddressType() {
-    switch (currentAddressType) {
-      case 0:
-        return AddressType.apartment;
-      case 1:
-        return AddressType.house;
-      case 2:
-        return AddressType.office;
-
-      default:
-        return AddressType.apartment;
-    }
-  }
-
-  getSavedAddress() async {
+  Future<void> getSavedAddress() async {
     emit(AddressLoading());
     // Get all Address from firebase
 
@@ -86,7 +83,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-  addAddress(AddressEntity address) async {
+  Future<void> addAddress(AddressEntity address) async {
     // add address to firebase
 
     (await _repository.addAddress(address)).fold(
@@ -101,7 +98,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-  Future<AddressEntity?> deleteAddress(int index) async {
+  Future<AddressEntity?> _deleteAddress(int index) async {
     (await _repository.deleteAddress(index)).fold(
       (l) {
         emit(AddressFailure());
@@ -115,7 +112,7 @@ class AddressCubit extends Cubit<AddressState> {
     return null;
   }
 
-  updateAddress(AddressEntity address) async {
+  Future<void> updateAddress(AddressEntity address) async {
     //  update Address from Firebase
     final index = addressList.indexWhere((element) => element.id == address.id);
     (await _repository.updateAddress(address)).fold(
@@ -130,7 +127,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-  clearAddress() async {
+  Future<void> clearAddress() async {
     //  clear all Address from Firebase
     (await _repository.clearAddress()).fold(
       (failure) {
@@ -143,32 +140,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-  String get addressHint1 {
-    switch (currentAddressType) {
-      case 0:
-        return AppStrings.buildingNum;
-      case 1:
-        return AppStrings.houseNum;
-      case 2:
-        return AppStrings.companyNum;
-      default:
-        return AppStrings.buildingNum;
-    }
-  }
-
-  pickLocation(BuildContext context) {
-    context.goTo(MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => MapCubit(getIt()),
-        ),
-        BlocProvider.value(value: getCubit(context)),
-      ],
-      child: const CustomGoogleMap(),
-    ));
-  }
-
-  save(BuildContext context, AddressEntity? address) {
+  void save(BuildContext context, AddressEntity? address) {
     if (!globalKey.currentState!.validate()) {
       return;
     }
@@ -177,7 +149,7 @@ class AddressCubit extends Cubit<AddressState> {
     context.back();
   }
 
-  _add() {
+  void _add() {
     final address = AddressEntity(
       id: DateTime.now().microsecondsSinceEpoch,
       streetName: street.text,
@@ -194,7 +166,7 @@ class AddressCubit extends Cubit<AddressState> {
     addAddress(address);
   }
 
-  _update(AddressEntity address) {
+  void _update(AddressEntity address) {
     final newAddress = address.copyWith(
       addressType: getAddressType().addressType,
       streetName: street.text,
@@ -210,11 +182,92 @@ class AddressCubit extends Cubit<AddressState> {
     updateAddress(newAddress);
   }
 
+  void delete(BuildContext context, int index) {
+    showCustomDialog(
+      context,
+      CustomAlertDialog(
+        message: 'Are you sure delete address',
+        onCancel: () {
+          dismissDialog(context);
+        },
+        onConfirm: () async {
+          await _deleteAddress(index);
+          // ignore: use_build_context_synchronously
+          dismissDialog(context);
+        },
+      ),
+    );
+  }
+
+  int getCurrentAddressType(String addressType) {
+    switch (addressType) {
+      case AppStrings.apartment:
+        return 0;
+      case AppStrings.house:
+        return 1;
+      case AppStrings.office:
+        return 2;
+      default:
+        return 0;
+    }
+  }
+
+  AddressType getAddressType() {
+    switch (currentAddressType) {
+      case 0:
+        return AddressType.apartment;
+      case 1:
+        return AddressType.house;
+      case 2:
+        return AddressType.office;
+
+      default:
+        return AddressType.apartment;
+    }
+  }
+
+  String get addressHint1 {
+    switch (currentAddressType) {
+      case 0:
+        return AppStrings.buildingNum;
+      case 1:
+        return AppStrings.houseNum;
+      case 2:
+        return AppStrings.companyNum;
+      default:
+        return AppStrings.buildingNum;
+    }
+  }
+
+  void pickLocation(BuildContext context) {
+    context.goTo(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => MapCubit(getIt()),
+          ),
+          BlocProvider.value(value: getCubit(context)),
+        ],
+        child: const CustomGoogleMap(),
+      ),
+    );
+  }
+
+  void goToEditAddressPage(BuildContext context,
+      [AddressEntity? addressEntity]) {
+    context.goTo(
+      BlocProvider.value(
+        value: getCubit(context),
+        child: EditAddressPage(address: addressEntity),
+      ),
+    );
+  }
+
   void dispose() {
-    // bNum.dispose();
-    // street.dispose();
-    // phone.dispose();
-    // additional.dispose();
-    // floor.dispose();
+    bNum.dispose();
+    street.dispose();
+    phone.dispose();
+    additional.dispose();
+    floor.dispose();
   }
 }

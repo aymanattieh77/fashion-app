@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:fashion_app/config/services/permissions.dart';
-import 'package:fashion_app/config/services/service_locator.dart';
-import 'package:fashion_app/data/data_source/local_data_source.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:fashion_app/config/services/permissions.dart';
+import 'package:fashion_app/config/services/service_locator.dart';
+
+import 'package:fashion_app/data/data_source/local_data_source.dart';
 
 import 'package:fashion_app/domain/entities/account/address.dart';
 
@@ -17,11 +19,15 @@ class MapCubit extends Cubit<MapState> {
   final LocationLocalDataSource _dataSource;
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  onMapCreated(GoogleMapController controller) {
+
+  void onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
 
   Set<Marker> markers = {};
+
+  CameraPosition get getInitalCameraPosition => _initalCameraPosition;
+
   final CameraPosition _initalCameraPosition = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -36,7 +42,13 @@ class MapCubit extends Cubit<MapState> {
     street: "Street",
   );
 
-  addMarker(double latitude, double longitude) {
+  void onMapTap(LatLng latLng) async {
+    addMarker(latLng.latitude, latLng.longitude);
+    await getLocationInfromation(latLng.latitude, latLng.longitude);
+    emit(LocationInfo());
+  }
+
+  void addMarker(double latitude, double longitude) {
     markers.clear();
     markers.add(
       Marker(
@@ -46,13 +58,7 @@ class MapCubit extends Cubit<MapState> {
     );
   }
 
-  void onMapTap(LatLng latLng) async {
-    addMarker(latLng.latitude, latLng.longitude);
-    await getLocationInfromation(latLng.latitude, latLng.longitude);
-    emit(LocationInfo());
-  }
-
-  getLocationInfromation(double latitude, double longitude) async {
+  Future<void> getLocationInfromation(double latitude, double longitude) async {
     final placemarks =
         await _dataSource.getLocationInfromation(latitude, longitude);
     if (placemarks != null) {
@@ -67,8 +73,6 @@ class MapCubit extends Cubit<MapState> {
     }
     return;
   }
-
-  CameraPosition get getInitalCameraPosition => _initalCameraPosition;
 
   checkPermission() async {
     await getIt<AppPermissions>().checkLocationPermission();

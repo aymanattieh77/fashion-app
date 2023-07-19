@@ -1,10 +1,13 @@
-import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fashion_app/config/routes/route_context.dart';
+
+import 'package:fashion_app/controllers/address/address_cubit.dart';
 import 'package:fashion_app/controllers/map/map_cubit.dart';
+
 import 'package:fashion_app/core/utils/colors.dart';
+
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
 import 'package:fashion_app/view/widgets/common/text_utils.dart';
 

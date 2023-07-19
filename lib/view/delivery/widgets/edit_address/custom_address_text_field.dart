@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+
 import 'package:fashion_app/core/extensions/theme_extension.dart';
 import 'package:fashion_app/core/utils/strings.dart';
-import 'package:flutter/material.dart';
 
 class CustomAddressTextField extends StatelessWidget {
   const CustomAddressTextField({
@@ -9,14 +10,17 @@ class CustomAddressTextField extends StatelessWidget {
     required this.hint,
     this.controller,
     this.optional = false,
+    required this.textInputType,
   });
   final String hint;
   final bool optional;
   final TextEditingController? controller;
+  final TextInputType textInputType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: textInputType,
       validator: (value) {
         if (optional) {
           return null;

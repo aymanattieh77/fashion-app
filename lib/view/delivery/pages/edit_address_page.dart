@@ -63,6 +63,7 @@ class _EditAddressPageState extends State<EditAddressPage> {
                     child: CustomAddressTextField(
                       hint: cubit.addressHint1,
                       controller: cubit.bNum,
+                      textInputType: TextInputType.number,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -71,6 +72,7 @@ class _EditAddressPageState extends State<EditAddressPage> {
                       child: CustomAddressTextField(
                         hint: AppStrings.floor,
                         controller: cubit.floor,
+                        textInputType: TextInputType.number,
                       ),
                     ),
                 ],
@@ -79,17 +81,20 @@ class _EditAddressPageState extends State<EditAddressPage> {
               CustomAddressTextField(
                 hint: AppStrings.street,
                 controller: cubit.street,
+                textInputType: TextInputType.text,
               ),
               const SizedBox(height: 20),
               CustomAddressTextField(
                 hint: AppStrings.additionalDirectionsOptional,
                 optional: true,
                 controller: cubit.additional,
+                textInputType: TextInputType.text,
               ),
               const SizedBox(height: 20),
               CustomAddressTextField(
                 hint: AppStrings.phoneNumber,
                 controller: cubit.phone,
+                textInputType: TextInputType.phone,
               ),
               const SizedBox(height: 20),
               CustomElevatedButton(
@@ -106,11 +111,5 @@ class _EditAddressPageState extends State<EditAddressPage> {
 
   _save() {
     cubit.save(context, widget.address);
-  }
-
-  @override
-  void dispose() {
-    cubit.dispose();
-    super.dispose();
   }
 }

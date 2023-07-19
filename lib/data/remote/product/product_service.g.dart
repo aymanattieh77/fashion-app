@@ -25,7 +25,7 @@ class _ProductService implements ProductService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<ProductDetailModel>(Options(
       method: 'GET',
@@ -50,7 +50,7 @@ class _ProductService implements ProductService {
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(queriesParameters);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<ProductResponse>(Options(
       method: 'GET',
