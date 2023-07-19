@@ -15,15 +15,16 @@ class FavouriteBodySection extends StatelessWidget {
     return SafeArea(
       child: BlocBuilder<FavouriteCubit, FavouriteState>(
         builder: (context, state) {
+          if (state is FavouriteLoading) {
+            return loadingCircularWidget();
+          }
           if (BlocProvider.of<FavouriteCubit>(context)
               .favouriteProducts
               .isEmpty) {
             return const EmptyState(
                 icon: Icons.favorite, message: AppStrings.favorite);
           }
-          if (state is FavouriteLoading) {
-            return loadingCircularWidget();
-          }
+
           return FavouritesProductsGridview(
             favouriteProducts:
                 BlocProvider.of<FavouriteCubit>(context).favouriteProducts,

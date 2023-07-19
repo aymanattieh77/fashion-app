@@ -44,9 +44,9 @@ class BillingInformationCard extends StatelessWidget {
           child: Column(
             children: [
               _textWithPrice(AppStrings.deliveryFee,
-                  BlocProvider.of<CheckoutCubit>(context).getDeliveryFee()),
+                  BlocProvider.of<CheckoutCubit>(context).getDeliveryFee),
               _textWithPrice(AppStrings.tax,
-                  BlocProvider.of<CheckoutCubit>(context).getFax()),
+                  BlocProvider.of<CheckoutCubit>(context).getFax),
               _textWithPrice(
                   AppStrings.subtotal,
                   BlocProvider.of<CheckoutCubit>(context)

@@ -1,15 +1,12 @@
-import 'package:fashion_app/core/utils/utils.dart';
-import 'package:fashion_app/view/delivery/widgets/edit_address/pick_location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fashion_app/controllers/address/address_cubit.dart';
-
+import 'package:fashion_app/core/utils/utils.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
-
 import 'package:fashion_app/view/delivery/widgets/edit_address/address_type_chip.dart';
 import 'package:fashion_app/view/delivery/widgets/edit_address/custom_address_text_field.dart';
-
+import 'package:fashion_app/view/delivery/widgets/edit_address/pick_location_widget.dart';
 import 'package:fashion_app/view/widgets/common/custom_appbar.dart';
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
 

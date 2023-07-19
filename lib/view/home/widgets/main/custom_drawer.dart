@@ -70,14 +70,6 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           IconWithTitle(
-            icon: AssetsIconPath.bag,
-            title: AppStrings.myOrders,
-            onTap: () {
-              // Go to Orders Screen
-              context.goToNamed(route: Routes.orders);
-            },
-          ),
-          IconWithTitle(
             icon: AssetsIconPath.document,
             title: AppStrings.aboutUs,
             onTap: () {

@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:fashion_app/config/routes/routes.dart';
+import 'package:fashion_app/controllers/cart/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -76,6 +78,14 @@ class AppCubit extends Cubit<AppState> {
           categoryName: categoryName,
         ),
       ),
+    );
+  }
+
+  backToHome(BuildContext context) {
+    BlocProvider.of<CartCubit>(context).clearAllProductsInCart();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      Routes.home,
+      (route) => false,
     );
   }
 }

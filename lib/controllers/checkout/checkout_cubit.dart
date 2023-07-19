@@ -23,8 +23,8 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   }
 
   AddressEntity? getSelectedAddress(BuildContext context) {
-    final res = getSavedAddress(context);
-    if (res.isEmpty) {
+    final result = getSavedAddress(context);
+    if (result.isEmpty) {
       return null;
     }
 
@@ -56,18 +56,16 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     return products;
   }
 
-  double getDeliveryFee() {
+  double get getDeliveryFee {
     return 3.00;
-    //todo
   }
 
-  double getFax() {
-    return 2.125;
-    //TODO
+  double get getFax {
+    return 2.120;
   }
 
   double getPriceTotal(BuildContext context) {
-    return getDeliveryFee() + getPriceSubTotal(context) + getFax();
+    return getDeliveryFee + (getPriceSubTotal(context) + getFax);
   }
 }
 

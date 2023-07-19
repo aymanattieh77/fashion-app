@@ -134,6 +134,8 @@
 "payment_method":"Payment Method",
 "swipe_for_payment":"Swipe for Payment",
 "paymant_successfully":"Paymant Successfully",
+"you_must_have_at_least_one_address":"You must Have at least one address, Please go to deilvery address and create address",
+
 
 "congratulation_":"Congratulation!!!",
 "payment_is_the_transfer":"Payment is the transfer of money services in exchange product or Payments",

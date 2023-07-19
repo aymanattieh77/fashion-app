@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:fashion_app/view/delivery/widgets/delivery/custom_delivery_appbar.dart';
 import 'package:fashion_app/view/delivery/widgets/delivery/delivery_body_section.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeliveryAddress extends StatefulWidget {
   const DeliveryAddress({super.key});
@@ -13,6 +12,14 @@ class DeliveryAddress extends StatefulWidget {
 }
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
+  late final AddressCubit cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = AddressCubit.getCubit(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -23,7 +30,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
 
   @override
   void dispose() {
-    BlocProvider.of<AddressCubit>(context).dispose();
+    cubit.dispose();
     super.dispose();
   }
 }

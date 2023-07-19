@@ -1,24 +1,22 @@
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
-import 'package:fashion_app/config/routes/route_context.dart';
-import 'package:fashion_app/config/routes/routes.dart';
-import 'package:fashion_app/controllers/cart/cart_cubit.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/domain/entities/account/address.dart' as ad;
-import 'package:fashion_app/domain/entities/account/user.dart';
-
-import 'package:fashion_app/view/payment/payment_screen.dart';
-import 'package:fashion_app/view/widgets/common/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
+import 'package:fashion_app/config/routes/route_context.dart';
+import 'package:fashion_app/config/routes/routes.dart';
+import 'package:fashion_app/controllers/user/user_cubit.dart';
 import 'package:fashion_app/core/functions/function.dart';
+import 'package:fashion_app/core/utils/strings.dart';
+import 'package:fashion_app/domain/entities/account/address.dart' as ad;
+import 'package:fashion_app/domain/entities/account/user.dart';
 import 'package:fashion_app/domain/entities/payment/payment_entity.dart';
 import 'package:fashion_app/domain/usecases/payment/create_payment_intent_usecase.dart';
+import 'package:fashion_app/view/widgets/common/custom_alert_dialog.dart';
 
-import '../checkout/checkout_cubit.dart';
+import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
 
 part 'payment_state.dart';
 
@@ -67,6 +65,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     try {
       // to display payment sheet
       await Stripe.instance.presentPaymentSheet();
+
       // ignore: use_build_context_synchronously
       goToPaymentSuccessfully(context);
     } on Exception catch (e) {
@@ -137,41 +136,24 @@ class PaymentCubit extends Cubit<PaymentState> {
     return BlocProvider.of<UserCubit>(context).user;
   }
 
-  goToPaymentSuccessfully(BuildContext context) {
-    final screen = BlocProvider.value(
-      value: BlocProvider.of<PaymentCubit>(context),
-      child: const PaymentScreen(),
-    );
-    context.goTo(screen, true);
-  }
-
-  getYourReceipt(BuildContext context) {
-    //TODO
+  void goToPaymentSuccessfully(BuildContext context) {
+    context.goToNamed(route: Routes.paymentSuccessfull);
   }
 
   showAddressDialog(BuildContext context) {
     showCustomDialog(
       context,
       CustomAlertDialog(
-        message:
-            "You must Have at least one address, Please go to deilvery address and create address",
-        confirmText: 'Add Address',
+        message: AppStrings.youMustHaveAtLeastOneAddress,
+        confirmText: AppStrings.add,
         onCancel: () {
           dismissDialog(context);
         },
         onConfirm: () {
           dismissDialog(context);
-          context.goToNamed(route: Routes.delivery);
+          context.goToNamed(route: Routes.delivery, replacement: true);
         },
       ),
-    );
-  }
-
-  backToHome(BuildContext context) {
-    BlocProvider.of<CartCubit>(context).clearAllProductsInCart();
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      Routes.home,
-      (route) => false,
     );
   }
 }

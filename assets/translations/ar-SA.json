@@ -131,8 +131,10 @@
     "subtotal_":"المجموع الفرعي:",
     "total_":"المجموع:",
     "payment_method":"طريقة الدفع",
-    "swipe_for_payment":"انتقد للدفع",
+    "swipe_for_payment":"انتقل للدفع",
     "paymant_successfully":"تم الدفع بنجاح",
+    "you_must_have_at_least_one_address":"يجب أن يكون لديك عنوان واحد على الأقل ، يرجى الذهاب إلى عنوان التسليم وإنشاء العنوان",
+
     
     "congratulation_":"تهنئة!!!",
     "payment_is_the_transfer":"الدفع هو تحويل خدمات الأموال مقابل منتج أو مدفوعات",

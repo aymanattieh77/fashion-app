@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:fashion_app/controllers/payment/payment_cubit.dart';
+import 'package:fashion_app/controllers/app/app_cubit.dart';
 import 'package:fashion_app/core/utils/assets.dart';
 import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/core/utils/strings.dart';
 import 'package:fashion_app/core/utils/values.dart';
 import 'package:fashion_app/view/widgets/common/custom_elevated_button.dart';
 
-import '../../widgets/common/text_utils.dart';
+import 'package:fashion_app/view/widgets/common/text_utils.dart';
 
 class PaymentBodySection extends StatelessWidget {
   const PaymentBodySection({super.key});
@@ -59,16 +59,9 @@ class PaymentBodySection extends StatelessWidget {
           child: Column(
             children: [
               CustomElevatedButton(
-                label: AppStrings.getYourReceipt,
-                press: () {
-                  //TODO get your receipt
-                },
-              ),
-              const SizedBox(height: AppSizes.s10),
-              CustomElevatedButton(
                 label: AppStrings.backToHome,
                 press: () {
-                  BlocProvider.of<PaymentCubit>(context).backToHome(context);
+                  BlocProvider.of<AppCubit>(context).backToHome(context);
                 },
                 backgroundColor: AppColor.orangeLight,
                 textColor: AppColor.orange,

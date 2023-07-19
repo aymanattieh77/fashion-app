@@ -13,7 +13,7 @@ class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog(
       {super.key,
       required this.message,
-      this.cancelText = 'Cancel',
+      this.cancelText = AppStrings.cancel,
       this.confirmText = 'Confirm',
       required this.onCancel,
       required this.onConfirm,

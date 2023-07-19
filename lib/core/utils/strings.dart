@@ -135,6 +135,8 @@ abstract class AppStrings {
   static const paymentIsTheTransfer = 'payment_is_the_transfer';
   static const getYourReceipt = 'get_your_receipt';
   static const backToHome = 'back_to_home';
+  static const youMustHaveAtLeastOneAddress =
+      'you_must_have_at_least_one_address';
 
   // profile strings
   static const profile = 'profile';
