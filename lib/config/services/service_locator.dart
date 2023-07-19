@@ -1,77 +1,31 @@
-import 'package:fashion_app/controllers/checkout/checkout_cubit.dart';
-import 'package:fashion_app/controllers/favourite/favourite_cubit.dart';
-import 'package:fashion_app/controllers/payment/payment_cubit.dart';
-import 'package:fashion_app/controllers/profile/profile_cubit.dart';
-import 'package:fashion_app/core/utils/constants.dart';
-import 'package:fashion_app/data/data_source/favourites_remote_data_source.dart';
-import 'package:fashion_app/data/data_source/payment_remote_data_source.dart';
-import 'package:fashion_app/data/remote/firebase_database/firebase_favourite_service.dart';
-import 'package:fashion_app/data/remote/firebase_storage/storage_service.dart';
-import 'package:fashion_app/data/remote/payment/payment_service.dart';
-import 'package:fashion_app/data/repository/firebase_address_repository_impl.dart';
-import 'package:fashion_app/data/repository/firebase_favourites_repository_impl.dart';
-import 'package:fashion_app/data/repository/payment_repository_impl.dart';
-import 'package:fashion_app/domain/usecases/auth/reauthenticate_user_usecase.dart';
-import 'package:fashion_app/domain/usecases/favourites/add_favourite_product_usecase.dart';
-import 'package:fashion_app/domain/usecases/favourites/clear_favourites_products_usecase.dart';
-import 'package:fashion_app/domain/usecases/favourites/delete_favourite_product_usecase.dart';
-import 'package:fashion_app/domain/usecases/favourites/get_favourites_products_usecase.dart';
-import 'package:fashion_app/domain/usecases/payment/create_payment_intent_usecase.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:fashion_app/core/utils/utils.dart';
+
 import 'package:fashion_app/config/services/permissions.dart';
 import 'package:fashion_app/config/services/prefs.dart';
-import 'package:fashion_app/controllers/address/address_cubit.dart';
-import 'package:fashion_app/controllers/app/app_cubit.dart';
-import 'package:fashion_app/controllers/auth/auth_cubit.dart';
-import 'package:fashion_app/controllers/category_product/category_product_cubit.dart';
-import 'package:fashion_app/controllers/home/home_cubit.dart';
-import 'package:fashion_app/controllers/main/main_cubit.dart';
-import 'package:fashion_app/controllers/map/map_cubit.dart';
-import 'package:fashion_app/controllers/product_detail/product_detail_cubit.dart';
-import 'package:fashion_app/controllers/search/search_cubit.dart';
-import 'package:fashion_app/controllers/theme/theme_cubit.dart';
-import 'package:fashion_app/controllers/user/user_cubit.dart';
+
+import 'package:fashion_app/data/network/dio_factory.dart';
+
 import 'package:fashion_app/core/network_info/network_info.dart';
-import 'package:fashion_app/data/data_source/address_remote_data_source.dart';
-import 'package:fashion_app/data/data_source/local_data_source.dart';
-import 'package:fashion_app/data/data_source/product_remote_data_source.dart';
-import 'package:fashion_app/data/data_source/user_remote_data_source.dart';
+
+import 'package:fashion_app/data/data_source/data_sources.dart';
+
 import 'package:fashion_app/data/local/location/location_service.dart';
 import 'package:fashion_app/data/local/location/location_service_impl.dart';
-import 'package:fashion_app/data/network/dio_factory.dart';
-import 'package:fashion_app/data/remote/auth/auth_service.dart';
-import 'package:fashion_app/data/remote/auth/auth_service_impl.dart';
-import 'package:fashion_app/data/remote/firebase_database/firebase_address_service.dart';
-import 'package:fashion_app/data/remote/firebase_database/firebase_user_service.dart';
-import 'package:fashion_app/data/remote/product/product_service.dart';
-import 'package:fashion_app/data/repository/auth_repository_impl.dart';
-import 'package:fashion_app/data/repository/category_product_repository.dart';
-import 'package:fashion_app/data/repository/firebase_user_repository_impl.dart';
-import 'package:fashion_app/data/repository/home_product_repository.dart';
-import 'package:fashion_app/data/repository/product_detail_repository.dart';
-import 'package:fashion_app/data/repository/search_product_repository.dart';
+
+import 'package:fashion_app/data/remote/remote.dart';
+import 'package:fashion_app/data/repository/repositories.dart';
+
 import 'package:fashion_app/domain/repository/repositories.dart';
-import 'package:fashion_app/domain/usecases/auth/auth_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/login_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/reset_password_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/sign_out_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/sign_up_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/sign_with_facebook_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/sign_with_google_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/updata_email_usecase.dart';
-import 'package:fashion_app/domain/usecases/category/get_products_by_filter_usecase.dart';
-import 'package:fashion_app/domain/usecases/detail/get_product_detail_by_id.dart';
-import 'package:fashion_app/domain/usecases/home/get_home_products_usecase.dart';
-import 'package:fashion_app/domain/usecases/search/get_product_by_search_usecase.dart';
-import 'package:fashion_app/domain/usecases/user/delete_user_profile_usecase.dart';
-import 'package:fashion_app/domain/usecases/user/get_user_profile_by_id_usecase.dart';
-import 'package:fashion_app/domain/usecases/user/save_user_profile_usecase.dart';
-import 'package:fashion_app/domain/usecases/user/update_user_profile_usecase.dart';
+import 'package:fashion_app/domain/usecases/usecases.dart';
+
+import 'package:fashion_app/controllers/controllers.dart';
 
 final getIt = GetIt.instance;
 
