@@ -10,17 +10,11 @@ import 'package:fashion_app/config/services/service_locator.dart';
 
 import 'package:fashion_app/controllers/user/user_cubit.dart';
 
-import 'package:fashion_app/core/extensions/string_extension.dart';
-import 'package:fashion_app/core/functions/function.dart';
-
-import 'package:fashion_app/core/utils/constants.dart';
-import 'package:fashion_app/core/utils/strings.dart';
+import 'package:fashion_app/core/utils/utils.dart';
 
 import 'package:fashion_app/domain/entities/account/user.dart';
 
 import 'package:fashion_app/domain/usecases/auth/auth_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/login_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/sign_up_usecase.dart';
 import 'package:fashion_app/domain/usecases/base_usecase.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 

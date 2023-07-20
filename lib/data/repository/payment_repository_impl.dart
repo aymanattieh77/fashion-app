@@ -18,7 +18,10 @@ class PaymentRepositoryImpl implements PaymentRepository {
       required String? paymentMethod}) async {
     try {
       final data = await _dateSource.createPaymentIntent(
-          amount: amount, currency: currency, paymentMethod: paymentMethod);
+        amount: amount,
+        currency: currency,
+        paymentMethod: paymentMethod,
+      );
       return Right(data.toDomain());
     } on Exception catch (e) {
       if (e is StripeException) {

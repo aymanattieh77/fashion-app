@@ -6,3 +6,4 @@ export 'home/get_home_products_usecase.dart';
 export 'payment/create_payment_intent_usecase.dart';
 export 'search/get_product_by_search_usecase.dart';
 export 'user/user_usecases.dart';
+export 'storage/upload_image_usecase.dart';

@@ -12,20 +12,26 @@ class DeliveryBodySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddressCubit, AddressState>(
+    return BlocConsumer<AddressCubit, AddressState>(
+      listener: (context, state) {
+        if (state is AddressFailure) {
+          showFullScreenErrorState(context, state.message);
+        }
+      },
       builder: (context, state) {
         if (BlocProvider.of<AddressCubit>(context).addressList.isEmpty) {
           return const EmptyState(
             icon: Icons.location_city,
             message: AppStrings.notFoundAddress,
           );
+        } else if (state is AddressLoading) {
+          return loadingCircularWidget();
+        } else if (state is AddressLoaded) {
+          return AddressListview(
+            address: AddressCubit.getCubit(context).addressList,
+          );
         } else {
-          if (state is AddressLoading) {
-            return loadingCircularWidget();
-          } else {
-            final address = BlocProvider.of<AddressCubit>(context).addressList;
-            return AddressListview(address: address);
-          }
+          return const SizedBox();
         }
       },
     );

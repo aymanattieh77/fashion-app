@@ -2,6 +2,7 @@
 
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fashion_app/core/errors/failure.dart';
 import 'package:fashion_app/data/data_source/address_remote_data_source.dart';
@@ -16,6 +17,8 @@ class FirebaseAddressRepositoryImpl implements FirebaseAddressRepository {
     try {
       await _dataSource.addAddress(addressEntity);
       return const Right(Void);
+    } on FirebaseException catch (e) {
+      return Left(FirebaseFailure(e.message ?? e.toString()));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }
@@ -26,6 +29,8 @@ class FirebaseAddressRepositoryImpl implements FirebaseAddressRepository {
     try {
       await _dataSource.clearAddress();
       return const Right(Void);
+    } on FirebaseException catch (e) {
+      return Left(FirebaseFailure(e.message ?? e.toString()));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }
@@ -36,6 +41,8 @@ class FirebaseAddressRepositoryImpl implements FirebaseAddressRepository {
     try {
       final deletedAddress = await _dataSource.deleteAddress(index);
       return Right(deletedAddress);
+    } on FirebaseException catch (e) {
+      return Left(FirebaseFailure(e.message ?? e.toString()));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }
@@ -48,8 +55,10 @@ class FirebaseAddressRepositoryImpl implements FirebaseAddressRepository {
       if (result.exists && result.data() != null) {
         return Right(Address.fromMap(result.data()!).address);
       } else {
-        return const Left(FirebaseFailure("address faild"));
+        return const Right([]);
       }
+    } on FirebaseException catch (e) {
+      return Left(FirebaseFailure(e.message ?? e.toString()));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }
@@ -61,6 +70,8 @@ class FirebaseAddressRepositoryImpl implements FirebaseAddressRepository {
     try {
       await _dataSource.updateAddress(addressEntity);
       return const Right(Void);
+    } on FirebaseException catch (e) {
+      return Left(FirebaseFailure(e.message ?? e.toString()));
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
     }

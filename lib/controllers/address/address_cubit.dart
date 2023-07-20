@@ -65,7 +65,7 @@ class AddressCubit extends Cubit<AddressState> {
 
   void updateAddressLocation(AddressLocationEntity loc) {
     addressLocation = loc;
-    emit(AddressInitial());
+    emit(AddressUpdated());
   }
 
   Future<void> getSavedAddress() async {
@@ -74,7 +74,7 @@ class AddressCubit extends Cubit<AddressState> {
 
     (await _repository.getSavedAddress()).fold(
       (failure) {
-        emit(AddressFailure());
+        emit(AddressFailure(failure.message));
       },
       (address) {
         addressList = address;
@@ -88,7 +88,7 @@ class AddressCubit extends Cubit<AddressState> {
 
     (await _repository.addAddress(address)).fold(
       (failure) {
-        emit(AddressFailure());
+        emit(AddressFailure(failure.message));
       },
       (r) {
         addressList.add(address);
@@ -100,8 +100,8 @@ class AddressCubit extends Cubit<AddressState> {
 
   Future<AddressEntity?> _deleteAddress(int index) async {
     (await _repository.deleteAddress(index)).fold(
-      (l) {
-        emit(AddressFailure());
+      (failure) {
+        emit(AddressFailure(failure.message));
       },
       (r) {
         addressList.removeAt(index);
@@ -117,7 +117,7 @@ class AddressCubit extends Cubit<AddressState> {
     final index = addressList.indexWhere((element) => element.id == address.id);
     (await _repository.updateAddress(address)).fold(
       (failure) {
-        emit(AddressFailure());
+        emit(AddressFailure(failure.message));
         showToastMessage("Feilad update address");
       },
       (r) {
@@ -131,7 +131,7 @@ class AddressCubit extends Cubit<AddressState> {
     //  clear all Address from Firebase
     (await _repository.clearAddress()).fold(
       (failure) {
-        emit(AddressFailure());
+        emit(AddressFailure(failure.message));
       },
       (r) {
         addressList.clear();

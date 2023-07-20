@@ -1,3 +1,5 @@
+import 'package:fashion_app/data/data_source/storage_remote_data_soruce.dart';
+import 'package:fashion_app/data/repository/firebase_storage_repository_impl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -104,6 +106,8 @@ setupRemoteDataSource() {
       () => FavouriteRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<PaymentRemoteDateSource>(
       () => PaymentRemoteDateSourceImpl(getIt()));
+  getIt.registerLazySingleton<StorageRemoteDataSource>(
+      () => StorageRemoteDataSourceImpl(getIt()));
 }
 
 setupAppRepositories() {
@@ -125,6 +129,8 @@ setupAppRepositories() {
       () => FirebaseFavouritesRepositoryImpl(getIt()));
   getIt.registerLazySingleton<PaymentRepository>(
       () => PaymentRepositoryImpl(getIt()));
+  getIt.registerLazySingleton<FirebaseStorageRepository>(
+      () => FirebaseStorageRepositoryImpl(getIt()));
 }
 
 setupUserService() {
@@ -256,8 +262,10 @@ void setupAuthService() {
 
 void setupProfileService() {
   if (!GetIt.I.isRegistered<ProfileCubit>()) {
+    getIt.registerLazySingleton<UploadImageUsecase>(
+        () => UploadImageUsecase(getIt()));
     getIt.registerFactory<ProfileCubit>(() => ProfileCubit(
-          getIt<StorageService>(),
+          getIt<UploadImageUsecase>(),
           getIt<UpdateEmailUsecase>(),
           getIt<ReAuthenticatesUserUsecase>(),
         ));

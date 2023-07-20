@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:fashion_app/core/errors/failure.dart';
 import 'package:fashion_app/domain/entities/account/address.dart';
@@ -86,4 +88,8 @@ abstract class PaymentRepository {
       required String? paymentMethod});
 
   Future<Either<Failure, PaymentEntity>> retrievePaymentIntent(String id);
+}
+
+abstract class FirebaseStorageRepository {
+  Future<Either<Failure, String>> uploadAnImage(File file);
 }

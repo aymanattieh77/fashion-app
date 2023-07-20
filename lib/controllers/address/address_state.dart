@@ -6,7 +6,10 @@ class AddressInitial extends AddressState {}
 
 class AddressLoading extends AddressState {}
 
-class AddressFailure extends AddressState {}
+class AddressFailure extends AddressState {
+  final String message;
+  AddressFailure(this.message);
+}
 
 class AddressUpdated extends AddressState {}
 

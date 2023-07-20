@@ -5,7 +5,7 @@ import 'package:fashion_app/core/utils/colors.dart';
 import 'package:fashion_app/view/widgets/state_renderer/failure/full_screen_failure_state.dart';
 import 'package:fashion_app/view/widgets/state_renderer/loading/full_screen_loading_state.dart';
 
-showStateRenderder(BuildContext context, Widget state) async {
+_showStateRenderder(BuildContext context, Widget state) async {
   await showDialog(
     context: context,
     builder: (context) => state,
@@ -13,7 +13,7 @@ showStateRenderder(BuildContext context, Widget state) async {
 }
 
 showFullScreenErrorState(BuildContext context, String errorMessage) {
-  showStateRenderder(
+  _showStateRenderder(
       context,
       FullScreenFailureState(
           message: errorMessage,
@@ -31,5 +31,5 @@ Widget loadingCircularWidget() {
 }
 
 showFullScreenLoadingState(BuildContext context) {
-  showStateRenderder(context, const FullScreenLoadingState());
+  _showStateRenderder(context, const FullScreenLoadingState());
 }

@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:fashion_app/domain/usecases/usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,26 +12,19 @@ import 'package:fashion_app/config/routes/route_context.dart';
 import 'package:fashion_app/config/services/permissions.dart';
 import 'package:fashion_app/config/services/service_locator.dart';
 import 'package:fashion_app/controllers/user/user_cubit.dart';
-import 'package:fashion_app/core/errors/exceptions.dart';
-import 'package:fashion_app/core/extensions/string_extension.dart';
-import 'package:fashion_app/core/functions/function.dart';
-import 'package:fashion_app/core/utils/assets.dart';
-import 'package:fashion_app/core/utils/constants.dart';
-import 'package:fashion_app/core/utils/strings.dart';
-import 'package:fashion_app/data/remote/firebase_storage/storage_service.dart';
-import 'package:fashion_app/domain/usecases/auth/login_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/reauthenticate_user_usecase.dart';
-import 'package:fashion_app/domain/usecases/auth/updata_email_usecase.dart';
+
+import 'package:fashion_app/core/utils/utils.dart';
+
 import 'package:fashion_app/view/auth/widgets/custom_input_field.dart';
 import 'package:fashion_app/view/widgets/common/custom_alert_dialog.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit(
-      this._storageService, this._updateEmailUsecase, this._reAuthenticatesUser)
+  ProfileCubit(this._uploadImageUsecase, this._updateEmailUsecase,
+      this._reAuthenticatesUser)
       : super(ProfileInitial());
-  final StorageService _storageService;
+  final UploadImageUsecase _uploadImageUsecase;
   final UpdateEmailUsecase _updateEmailUsecase;
   final ReAuthenticatesUserUsecase _reAuthenticatesUser;
   final permissions = getIt<AppPermissions>();
@@ -78,7 +74,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           await _reLoginUserAccounnt(context);
           return;
         },
-        (r) async {
+        (_) async {
           await cubit.updateUserProfile(
             context,
             username: username.text,
@@ -107,7 +103,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         : await permissions.requestCameraPermission();
 
     if (isGrand) {
-      // ignore: use_build_context_synchronously
       _pickImage(context, source);
     } else {
       permissions.openSettings();
@@ -117,7 +112,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   _pickImage(BuildContext context, ImageSource imageSource) async {
     // pick image from gallery or camera
     final file = await pickImage(imageSource);
-    // ignore: use_build_context_synchronously
+
     dismissDialog(context);
     if (file != null) {
       // store image path in firebase storage
@@ -131,13 +126,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<String?> _uploadAnImageFirebaseStorage(File file) async {
-    try {
-      return await _storageService.uploadAnImage(file);
-    } on FireException catch (e) {
-      emit(ProfileFailure());
-      showToastMessage(e.message);
-    }
-    return null;
+    return (await _uploadImageUsecase.call(file)).fold(
+      (failure) {
+        emit(ProfileFailure());
+        showToastMessage(failure.message);
+        return null;
+      },
+      (filepath) {
+        return filepath;
+      },
+    );
   }
 
   _reLoginUserAccounnt(BuildContext context) async {
