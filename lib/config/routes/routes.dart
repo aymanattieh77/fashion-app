@@ -1,4 +1,7 @@
+import 'package:fashion_app/controllers/rating/rating_cubit.dart';
+import 'package:fashion_app/view/about/faq_screen.dart';
 import 'package:fashion_app/view/about/privacy_policy_screen.dart';
+import 'package:fashion_app/view/about/rating_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -26,6 +29,8 @@ abstract class Routes {
   static const checkout = '/checkout';
   static const paymentSuccessfull = '/payment_success_full';
   static const privacyPolicy = '/privacy_policy';
+  static const rating = '/rating';
+  static const faq = '/faq_';
 }
 
 class AppRouter {
@@ -61,6 +66,10 @@ class AppRouter {
         return screen(_paymentSuccessfully(), PageTransitionType.fade);
       case Routes.privacyPolicy:
         return screen(_privacyPolicy());
+      case Routes.faq:
+        return screen(_faq());
+      case Routes.rating:
+        return screen(_rating());
       default:
         return unKnowunScreen();
     }
@@ -172,5 +181,16 @@ class AppRouter {
 
   static _privacyPolicy() {
     return const PrivacyPolicyScreen();
+  }
+
+  static _faq() {
+    return const FAQScreen();
+  }
+
+  static _rating() {
+    return BlocProvider(
+      create: (context) => RatingCubit(),
+      child: const RatingScreen(),
+    );
   }
 }

@@ -11,6 +11,9 @@ abstract class AppStrings {
   static const skip = 'skip';
   static const add = 'add';
   static const or = 'or';
+  static const howWouldrateOurApp = 'how_would_rate_our_app';
+  static const rateOurApp = 'rate_our_app';
+  static const submitRating = 'submit_rating';
 
   static const cancel = 'cancel';
 

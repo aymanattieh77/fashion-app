@@ -53,6 +53,7 @@ dependencies:
   image_picker: ^1.0.1
   firebase_storage: ^11.2.5
   flutter_dotenv: ^5.1.0
+  flutter_rating_bar: ^4.0.1
   
   
 
