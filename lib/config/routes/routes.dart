@@ -1,3 +1,4 @@
+import 'package:fashion_app/view/about/privacy_policy_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -24,6 +25,7 @@ abstract class Routes {
   static const delivery = '/delivery';
   static const checkout = '/checkout';
   static const paymentSuccessfull = '/payment_success_full';
+  static const privacyPolicy = '/privacy_policy';
 }
 
 class AppRouter {
@@ -57,6 +59,8 @@ class AppRouter {
         return screen(_checkout());
       case Routes.paymentSuccessfull:
         return screen(_paymentSuccessfully(), PageTransitionType.fade);
+      case Routes.privacyPolicy:
+        return screen(_privacyPolicy());
       default:
         return unKnowunScreen();
     }
@@ -164,5 +168,9 @@ class AppRouter {
       ],
       child: const SearchPage(),
     );
+  }
+
+  static _privacyPolicy() {
+    return const PrivacyPolicyScreen();
   }
 }

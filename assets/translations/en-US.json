@@ -192,7 +192,31 @@
 "no_internet_connection":"No Internet Connection",
 "opps_there_was_an_error":"Opps There was an Error, Please try again",
 "your_request_was_not_found":"Your request was not found, please try later",
-"server_error":"There is a problem with server, please try later"
+"server_error":"There is a problem with server, please try later",
+
+
+
+  "privacy_policy_point1": "Personal Information: When you register for an account, make a purchase, or use certain features of the app, we may collect personal information, such as your name, email address, phone number, shipping and billing addresses, and payment details.",
+  "privacy_policy_point2": "Non-Personal Information: We may also gather non-personal information about your use of the app, such as device information, IP address, browser type, and usage statistics, which does not directly identify you.",
+  "privacy_policy_point3": "How We Use Your Information: Order Processing, Account Management, Marketing and Promotions, Improve and Optimize.",
+  "privacy_policy_point4": "How We Share Your Information: Third-Party Service Providers, Legal Requirements, Business Transactions.",
+  "privacy_policy_point5": "Cookies and Similar Technologies: We use cookies and similar technologies to collect non-personal information, enhance user experience, and analyze app usage. You can manage your cookie preferences through your device settings.",
+  "privacy_policy_point6": "Data Security: We implement industry-standard security measures to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.",
+  "privacy_policy_point7": "Children's Privacy: Our app is not intended for children under the age of [insert age limit]. We do not knowingly collect personal information from children under this age. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately.",
+  "privacy_policy_point8": "Your Choices: You have the right to access, update, correct, or delete your personal information. You can also opt-out of receiving marketing communications from us. If you wish to exercise any of these rights or have questions about your data, please contact us using the information provided at the end of this policy.",
+  "privacy_policy_point9": "Changes to this Privacy Policy: We may update this Privacy Policy periodically to reflect changes in our practices or for other operational, legal, or regulatory reasons. The revised policy will be effective immediately upon posting, and we encourage you to review it regularly.",
+  "privacy_policy_point10": "Contact Us: If you have any questions, concerns, or requests related to this Privacy Policy or our data practices, please contact us at aymanattieh@gmail.com."
+
+
+
+
+
+
+
+
+
+
+
 
 
 

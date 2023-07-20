@@ -81,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
             icon: AssetsIconPath.lock,
             title: AppStrings.privacyPolicy,
             onTap: () {
-              //TODO Go to Privacy Screen
+              context.goToNamed(route: Routes.privacyPolicy);
             },
           ),
           IconWithTitle(
