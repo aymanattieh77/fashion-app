@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -186,13 +188,12 @@ class AddressCubit extends Cubit<AddressState> {
     showCustomDialog(
       context,
       CustomAlertDialog(
-        message: 'Are you sure delete address',
+        message: AppStrings.areYouSureToDeleteAddress,
         onCancel: () {
           dismissDialog(context);
         },
         onConfirm: () async {
           await _deleteAddress(index);
-          // ignore: use_build_context_synchronously
           dismissDialog(context);
         },
       ),

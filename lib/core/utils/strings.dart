@@ -16,6 +16,8 @@ abstract class AppStrings {
   static const submitRating = 'submit_rating';
 
   static const cancel = 'cancel';
+  static const confirm = 'confirm';
+  static const areYouSureToDeleteAddress = 'are_you_sure_delete_address';
 
   static const changeLanguage = 'change_language';
   static const pickImageGalleryCamera = 'pick_image_camera_gallery';

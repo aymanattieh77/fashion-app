@@ -12,6 +12,8 @@
 "or":"Or",
 "add":"Add",
 "cancel":"Cancel",
+"confirm":"Confirm",
+"are_you_sure_delete_address":"Are you sure to delete address?",
 "not_found_address":"Not Found Saved Address",
 "change_language":"Change Language",
 "pick_image_camera_gallery":"Pick an image from Camera or Gallery!",

@@ -12,6 +12,8 @@
     "skip":"تخطى",
     "add":"أضافة",
     "cancel":"ألغاء",
+    "confirm":"تأكيد",
+    "are_you_sure_delete_address":"هل أنت متأكد من حذف العنوان؟",
     "or":"أو",
     "change_language":"تغير الغة",
     "pick_image_camera_gallery":"اختر صورة من الكاميرا أو المعرض!",
