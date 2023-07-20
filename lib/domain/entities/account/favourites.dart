@@ -15,11 +15,13 @@ class Favourites {
 
   factory Favourites.fromMap(Map<String, dynamic> map) {
     return Favourites(
-      favourites: List<ProductsFavourite>.from(
-        (map['favourites'] as List<dynamic>).map<ProductsFavourite>(
-          (x) => ProductsFavourite.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      favourites: map['favourites'] != null
+          ? List<ProductsFavourite>.from(
+              (map['favourites'] as List<dynamic>).map<ProductsFavourite>(
+                (x) => ProductsFavourite.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
     );
   }
 }

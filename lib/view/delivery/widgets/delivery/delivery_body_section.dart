@@ -19,13 +19,13 @@ class DeliveryBodySection extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (BlocProvider.of<AddressCubit>(context).addressList.isEmpty) {
+        if (state is AddressLoading) {
+          return loadingCircularWidget();
+        } else if (BlocProvider.of<AddressCubit>(context).addressList.isEmpty) {
           return const EmptyState(
             icon: Icons.location_city,
             message: AppStrings.notFoundAddress,
           );
-        } else if (state is AddressLoading) {
-          return loadingCircularWidget();
         } else if (state is AddressLoaded) {
           return AddressListview(
             address: AddressCubit.getCubit(context).addressList,

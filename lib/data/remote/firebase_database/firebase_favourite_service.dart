@@ -50,8 +50,9 @@ class FirebaseFavouriteServiceImpl implements FirebaseFavouriteService {
         .get();
     if (result.exists && result.data() != null) {
       return Favourites.fromMap(result.data()!).favourites;
+    } else {
+      return [];
     }
-    return [];
   }
 
   @override

@@ -207,12 +207,12 @@
   "privacy_policy_point7": "Children's Privacy: Our app is not intended for children under the age of [insert age limit]. We do not knowingly collect personal information from children under this age. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately.",
   "privacy_policy_point8": "Your Choices: You have the right to access, update, correct, or delete your personal information. You can also opt-out of receiving marketing communications from us. If you wish to exercise any of these rights or have questions about your data, please contact us using the information provided at the end of this policy.",
   "privacy_policy_point9": "Changes to this Privacy Policy: We may update this Privacy Policy periodically to reflect changes in our practices or for other operational, legal, or regulatory reasons. The revised policy will be effective immediately upon posting, and we encourage you to review it regularly.",
-  "privacy_policy_point10": "Contact Us: If you have any questions, concerns, or requests related to this Privacy Policy or our data practices, please contact us at aymanattieh@gmail.com.",
+  "privacy_policy_point10": "Contact Us: If you have any questions, concerns, or requests related to this Privacy Policy or our data practices, please contact us at fashionapp@info.com.",
 
   
-  "faq_question1": "What is [Your eCommerce Fashion App Name]?",
-  "faq_question2": "Do I need to create an account to shop on [Your eCommerce Fashion App Name]?",
-  "faq_question3": "How can I download the [Your eCommerce Fashion App Name]?",
+  "faq_question1": "What is Fashion App?",
+  "faq_question2": "Do I need to create an account to shop on Fashion App?",
+  "faq_question3": "How can I download the Fashion App?",
   "faq_question4": "How do I reset my password?",
   "faq_question5": "How can I find products I'm interested in?",
   "faq_question6": "Can I save items for later?",
@@ -225,7 +225,7 @@
   "faq_question13": "Do you offer promotions or discounts?",
    
 
-  "faq_answers1": "[Your eCommerce Fashion App Name] is a cutting-edge mobile application that offers an extensive selection of fashion apparel, footwear, accessories, and more. Our app provides a convenient and enjoyable shopping experience, allowing you to browse and purchase the latest trends and styles right from your smartphone.",
+  "faq_answers1": "Fashion App is a cutting-edge mobile application that offers an extensive selection of fashion apparel, footwear, accessories, and more. Our app provides a convenient and enjoyable shopping experience, allowing you to browse and purchase the latest trends and styles right from your smartphone.",
   "faq_answers2": "While you can browse our collection without an account, you'll need to create one to make purchases. The account allows you to save your preferences, track orders, and receive personalized recommendations.",
   "faq_answers3": "You can download our app for free from the App Store (for iOS devices) or the Google Play Store (for Android devices). Simply search for '[Your eCommerce Fashion App Name]' in the store and click the 'Install' button.",
   "faq_answers4": "If you forget your password, don't worry! On the login screen, click on 'Forgot Password,' and we'll send you an email with instructions to reset it. Make sure to check your spam or junk folder if you don't see the email in your inbox.",
@@ -234,9 +234,9 @@
   "faq_answers7": "We accept a range of secure payment options, including credit cards (Visa, Mastercard, American Express), debit cards, and PayPal. Rest assured that your payment information is encrypted and protected.",
   "faq_answers8": "Shipping times and costs may vary based on your location and the shipping method you choose during checkout. We offer standard and expedited shipping options. For more details, please refer to our Shipping and Delivery page.",
   "faq_answers9": "Absolutely! Once your order is processed and shipped, you will receive a tracking number via email or within the app. You can use this number to track your package and get real-time updates on its status.",
-  "faq_answers10": "We want you to be completely satisfied with your purchase. If you encounter any issues or change your mind, you can initiate a return or exchange within [X] days of receiving your order. Please review our Returns and Refunds policy for more information.",
-  "faq_answers11": "We prioritize your privacy and employ robust security measures to safeguard your personal information. For more details on how we handle your data, please refer to our Privacy Policy [link to privacy policy].",
-  "faq_answers12": "Our dedicated customer support team is here to assist you. You can reach out to us through the 'Contact Us' section in the app, or you can email us at [customer support email]. We aim to respond promptly to all inquiries.",
+  "faq_answers10": "We want you to be completely satisfied with your purchase. If you encounter any issues or change your mind, you can initiate a return or exchange within 3 days of receiving your order. Please review our Returns and Refunds policy for more information.",
+  "faq_answers11": "We prioritize your privacy and employ robust security measures to safeguard your personal information. For more details on how we handle your data, please refer to our Privacy Policy.",
+  "faq_answers12": "Our dedicated customer support team is here to assist you. You can reach out to us through the 'Contact Us' section in the app, or you can email us at [fashionapp@support.com]. We aim to respond promptly to all inquiries.",
   "faq_answers13": "Yes! We frequently run special promotions and offer exclusive discounts to our valued customers. To stay updated on the latest deals, be sure to subscribe to our newsletter and follow us on social media."
 
 

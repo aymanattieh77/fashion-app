@@ -41,6 +41,7 @@ class RatingForm extends StatelessWidget {
               const TextUtils(
                 text: AppStrings.howWouldrateOurApp,
                 fontSize: 25,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
               RatingBar.builder(
