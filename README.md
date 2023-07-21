@@ -10,23 +10,21 @@ styles.
 ## Key Features
 
 ❖ User Authentication and Registration: Users can create accounts, log in
-securely, and manage their profiles to access personalized features and
-order history.
+securely, and manage their profiles to access personalized features.
+
 
 ❖ Browse and Search: Users can easily explore a diverse selection of clothing
 items, organized by categories, brands, or price ranges. A search
 functionality allows for quick and specific item searches.
 
 ❖ Product Details: Each clothing item is accompanied by detailed product
-information, including images, descriptions, sizes, colors, and customer
-reviews.
+information, including images, and descriptions.
 
 ❖ Shopping Cart Management: Users can add desired items to their shopping
 carts, view and update the cart contents, and remove items as needed.
 
-❖ Secure Checkout: The app offers a secure and streamlined checkout
-process, allowing users to choose from multiple payment options and enter
-shipping details for a seamless transaction.
+❖ Checkout: The app offers a secure and streamlined checkout
+process.
 
 ❖ User Profile Management: Users can manage their personal information,
 view, and edit their shipping addresses, and update their preferences.
