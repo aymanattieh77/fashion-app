@@ -134,7 +134,7 @@ view, and edit their shipping addresses, and update their preferences.
    ![favourites_faq_about_rate](https://github.com/aymanattieh77/fashion-app/assets/87063387/1e01fa9c-72da-4eb4-ad07-4b5eac52b683)
 
 
-## Features and Functionality:
+## Features and Functionality
 - User authentication and registration.
 - RESTful APIs.
 - Integrated with Firebase Backend.
