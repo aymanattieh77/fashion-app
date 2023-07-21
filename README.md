@@ -63,7 +63,7 @@ view, and edit their shipping addresses, and update their preferences.
     - Widgets.
     - State Renderer.
 
-## Screens:
+## Screens
 - Splash.
 - On Boarding.
 - Authentication
