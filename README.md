@@ -1,13 +1,13 @@
 # Fashion App
 
-## Description:
+## Description
 The eCommerce Fashion Flutter app is a mobile application designed to provide
 users with a seamless and convenient shopping experience for clothing items.
 With a user-friendly interface and a wide range of clothing categories, the app
 aims to cater to fashion enthusiasts and shoppers looking for the latest trends and
 styles.
 
-## Key Features:
+## Key Features
 
 ❖ User Authentication and Registration: Users can create accounts, log in
 securely, and manage their profiles to access personalized features and
@@ -31,11 +31,11 @@ shipping details for a seamless transaction.
 ❖ User Profile Management: Users can manage their personal information,
 view, and edit their shipping addresses, and update their preferences.
 
-## Architecture and Code Organization:
+## Architecture and Code Organization
 
 ### Clean Architecture (MVVM) With Bloc State Management
 
-#### Folder Structure:
+#### Folder Structure
 
 - Config
      - app routes, services, cache, and permissions
@@ -160,7 +160,7 @@ range.
     - Payments with Stripe SDK.
       
 
-## Packages:
+## Packages
 - flutter_svg: ^2.0.6
 - flutter_bloc: ^8.1.3
 - get_it: ^7.6.0
