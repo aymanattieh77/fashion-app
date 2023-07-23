@@ -22,7 +22,6 @@ class _FashionAppState extends State<FashionApp> {
   @override
   void didChangeDependencies() {
     getIt<AppPrefs>().getLocale().then((locale) => context.setLocale(locale));
-
     super.didChangeDependencies();
   }
 

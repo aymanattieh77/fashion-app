@@ -48,7 +48,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         ProductsInformations(
           name: item.key.name,
           count: item.value,
-          price: item.key.currentPrice,
+          price: item.key.currentPrice * item.value ,
         ),
       );
     }

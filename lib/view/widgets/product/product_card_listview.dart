@@ -20,7 +20,7 @@ class ProductCardListview extends StatelessWidget {
       height: context.setHeight(0.40),
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.only(left: AppPadding.p20),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
         itemCount: products.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {

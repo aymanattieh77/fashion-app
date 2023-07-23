@@ -17,18 +17,17 @@ class FavouriteBodySection extends StatelessWidget {
         builder: (context, state) {
           if (state is FavouriteLoading) {
             return loadingCircularWidget();
-          }
-          if (BlocProvider.of<FavouriteCubit>(context)
+          } else if (BlocProvider.of<FavouriteCubit>(context)
               .favouriteProducts
               .isEmpty) {
             return const EmptyState(
                 icon: Icons.favorite, message: AppStrings.favorite);
+          } else {
+            return FavouritesProductsGridview(
+              favouriteProducts:
+                  BlocProvider.of<FavouriteCubit>(context).favouriteProducts,
+            );
           }
-
-          return FavouritesProductsGridview(
-            favouriteProducts:
-                BlocProvider.of<FavouriteCubit>(context).favouriteProducts,
-          );
         },
       ),
     );

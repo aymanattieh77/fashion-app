@@ -19,3 +19,4 @@ export 'search/search_cubit.dart';
 export 'splash/splash_cubit.dart';
 export 'theme/theme_cubit.dart';
 export 'user/user_cubit.dart';
+export 'rating/rating_cubit.dart';

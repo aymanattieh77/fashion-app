@@ -47,7 +47,7 @@ void main() async {
   );
 }
 
-startInitialize() async {
+Future<void> startInitialize() async {
   await dotenv.load();
   await serviceLocatorStart();
   await EasyLocalization.ensureInitialized();

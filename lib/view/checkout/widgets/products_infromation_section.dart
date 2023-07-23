@@ -83,7 +83,7 @@ Padding _productInfromation(
         SizedBox(
           width: 100,
           child: TextUtils(
-            text: name,
+            text: name.substring(22),
             fontSize: 14,
             tr: false,
             maxlines: 1,

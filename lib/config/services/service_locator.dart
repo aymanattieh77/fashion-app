@@ -33,7 +33,6 @@ final getIt = GetIt.instance;
 
 serviceLocatorStart() async {
   await setupAppService();
-  setupThemeService();
   setupLocalDataService();
   setupAPIService();
   setupRemoteDataSource();
@@ -45,17 +44,17 @@ serviceLocatorStart() async {
 setupAppService() async {
   final prefs = await SharedPreferences.getInstance();
   getIt.registerLazySingleton<AppPrefs>(() => AppPrefsImpl(prefs));
+  setupThemeService();
   getIt.registerLazySingleton<AppCubit>(() => AppCubit());
   getIt.registerLazySingleton<AppPermissions>(() => AppPermissionsImpl());
 }
 
-setupThemeService() {
+void setupThemeService() {
   final isDark = getIt<AppPrefs>().isDark();
-  if (GetIt.I.isRegistered<ThemeCubit>()) {
-    getIt.unregister<ThemeCubit>();
+  if (!GetIt.I.isRegistered<ThemeCubit>()) {
+    getIt.registerLazySingleton<ThemeCubit>(
+        () => ThemeCubit(isDark ? ThemeMode.dark : ThemeMode.light));
   }
-  getIt.registerFactory<ThemeCubit>(
-      () => ThemeCubit(isDark ? ThemeMode.dark : ThemeMode.light));
 }
 
 setupLocalDataService() {
