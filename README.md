@@ -84,6 +84,8 @@ view, and edit their shipping addresses, and update their preferences.
 
 - Favorites
      - Contains favorites Products.
+       
+- Cart
      - Shopping Cart
      - Add to Cart functionality.
      - Remove from Cart.
