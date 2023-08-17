@@ -52,7 +52,9 @@ Future<void> startInitialize() async {
   await dotenv.load();
   await serviceLocatorStart();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Stripe.publishableKey =
       dotenv.env[AppConstants.stripePublishableKey] as String;
   await Stripe.instance.applySettings();
